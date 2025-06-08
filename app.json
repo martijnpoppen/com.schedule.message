@@ -1,0 +1,865 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.schedule.message",
+  "version": "0.0.0",
+  "compatibility": ">=12.0.1",
+  "sdk": 3,
+  "permissions": [],
+  "brandColor": "#4B0082",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Schedule Message",
+    "nl": "Bericht plannen",
+    "de": "Nachricht planen",
+    "fr": "Planifier un message",
+    "it": "Pianifica messaggio",
+    "sv": "Schemalägg meddelande",
+    "no": "Planlegg melding",
+    "es": "Programar mensaje",
+    "da": "Planlæg besked",
+    "ru": "Запланировать сообщение",
+    "pl": "Zaplanować wiadomość",
+    "ko": "메시지 예약"
+  },
+  "description": {
+    "en": "Easily schedule messages to be sent at any time from your Homey.",
+    "nl": "Plan eenvoudig berichten om op elk moment van je Homey te worden verzonden.",
+    "de": "Planen Sie Nachrichten, die zu jeder Zeit von Ihrem Homey gesendet werden.",
+    "fr": "Planifiez facilement des messages à envoyer à tout moment depuis votre Homey.",
+    "it": "Pianifica facilmente i messaggi da inviare in qualsiasi momento dal tuo Homey.",
+    "sv": "Schemalägg enkelt meddelanden som ska skickas när som helst från din Homey.",
+    "no": "Planlegg enkelt meldinger som skal sendes når som helst fra din Homey.",
+    "es": "Programa fácilmente mensajes para que se envíen en cualquier momento desde tu Homey.",
+    "da": "Planlæg nemt beskeder, der skal sendes når som helst fra din Homey.",
+    "ru": "Легко запланируйте отправку сообщений в любое время с вашего Homey.",
+    "pl": "Łatwo zaplanuj wysyłanie wiadomości o dowolnej porze z Homey.",
+    "ko": "언제든지 Homey에서 보낼 메시지를 쉽게 예약하세요."
+  },
+  "category": [
+    "internet"
+  ],
+  "images": {
+    "small": "/assets/images/small.jpg",
+    "large": "/assets/images/large.jpg",
+    "xlarge": "/assets/images/xlarge.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "homey@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "homey@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 Martijn Poppen"
+      },
+      {
+        "name": "🇳🇱 Martijn Poppen"
+      },
+      {
+        "name": "🇩🇪 Martijn Poppen"
+      },
+      {
+        "name": "🇫🇷 Martijn Poppen"
+      },
+      {
+        "name": "🇮🇹 Martijn Poppen"
+      },
+      {
+        "name": "🇸🇪 Martijn Poppen"
+      },
+      {
+        "name": "🇳🇴 Martijn Poppen"
+      },
+      {
+        "name": "🇪🇸 Martijn Poppen"
+      },
+      {
+        "name": "🇩🇰 Martijn Poppen"
+      },
+      {
+        "name": "🇷🇺 Martijn Poppen"
+      },
+      {
+        "name": "🇵🇱 Martijn Poppen"
+      },
+      {
+        "name": "🇰🇷 Martijn Poppen"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      },
+      "bunq": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "tags": {
+    "en": [
+      "message",
+      "schedule",
+      "timer",
+      "notification",
+      "reminder",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "nl": [
+      "bericht",
+      "planning",
+      "timer",
+      "notificatie",
+      "herinnering",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "de": [
+      "Nachricht",
+      "Zeitplan",
+      "Timer",
+      "Benachrichtigung",
+      "Erinnerung",
+      "WhatsApp",
+      "Telegram",
+      "E-Mail",
+      "SMS",
+      "Push",
+      "Homey",
+      "HomeyPro",
+      "Slack",
+      "Discord",
+      "Teams",
+      "Signal"
+    ],
+    "fr": [
+      "message",
+      "planification",
+      "minuteur",
+      "notification",
+      "rappel",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "it": [
+      "messaggio",
+      "programmazione",
+      "timer",
+      "notifica",
+      "promemoria",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "sv": [
+      "meddelande",
+      "schema",
+      "timer",
+      "avisering",
+      "påminnelse",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "no": [
+      "melding",
+      "planlegging",
+      "timer",
+      "varsling",
+      "påminnelse",
+      "whatsapp",
+      "telegram",
+      "e-post",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "es": [
+      "mensaje",
+      "programación",
+      "temporizador",
+      "notificación",
+      "recordatorio",
+      "whatsapp",
+      "telegram",
+      "correo electrónico",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "da": [
+      "besked",
+      "planlægning",
+      "timer",
+      "underretning",
+      "påmindelse",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "ru": [
+      "сообщение",
+      "расписание",
+      "таймер",
+      "уведомление",
+      "напоминание",
+      "whatsapp",
+      "telegram",
+      "электронная почта",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "pl": [
+      "wiadomość",
+      "planowanie",
+      "timer",
+      "powiadomienie",
+      "przypomnienie",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "ko": [
+      "메시지",
+      "예약",
+      "타이머",
+      "알림",
+      "알림",
+      "whatsapp",
+      "telegram",
+      "이메일",
+      "sms",
+      "푸시",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ]
+  },
+  "bugs": {
+    "url": "https://community.homey.app/t/131942"
+  },
+  "source": "https://github.com/martijnpoppen/com.schedule.message",
+  "homeyCommunityTopicId": 131942,
+  "support": "https://community.homey.app/t/131942",
+  "flow": {
+    "triggers": [
+      {
+        "id": "scheduled_message_trigger",
+        "title": {
+          "en": "Schedule is Triggered",
+          "nl": "Schema is Getriggerd",
+          "de": "Zeitplan wurde ausgelöst",
+          "fr": "Le programme a été déclenché",
+          "it": "Il programma è stato attivato",
+          "sv": "Schemat utlöste",
+          "no": "Planen ble utløst",
+          "es": "El horario se activó",
+          "da": "Planen blev udløst",
+          "ru": "Расписание было вызвано",
+          "pl": "Harmonogram został wywołany",
+          "ko": "예약이 트리거되었습니다"
+        },
+        "titleFormatted": {
+          "en": "Schedule is Triggered",
+          "nl": "Schema is Getriggerd",
+          "de": "Zeitplan wurde ausgelöst",
+          "fr": "Le programme a été déclenché",
+          "it": "Il programma è stato attivato",
+          "sv": "Schemat utlöste",
+          "no": "Planen ble utløst",
+          "es": "El horario se activó",
+          "da": "Planen blev udløst",
+          "ru": "Расписание было вызвано",
+          "pl": "Harmonogram został wywołany",
+          "ko": "예약이 트리거되었습니다"
+        },
+        "tokens": [
+          {
+            "name": "recipient",
+            "title": {
+              "en": "Recipient",
+              "nl": "Ontvanger",
+              "de": "Empfänger",
+              "fr": "Destinataire",
+              "it": "Destinatario",
+              "sv": "Mottagare",
+              "no": "Mottaker",
+              "es": "Destinatario",
+              "da": "Modtager",
+              "ru": "Получатель",
+              "pl": "Odbiorca",
+              "ko": "수신자"
+            },
+            "type": "string",
+            "value": "unknown"
+          },
+          {
+            "name": "message",
+            "title": {
+              "en": "Message",
+              "nl": "Bericht",
+              "de": "Nachricht",
+              "fr": "Message",
+              "it": "Messaggio",
+              "sv": "Meddelande",
+              "no": "Melding",
+              "es": "Mensaje",
+              "da": "Besked",
+              "ru": "Сообщение",
+              "pl": "Wiadomość",
+              "ko": "메시지"
+            },
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "title": {
+              "en": "Category",
+              "nl": "Categorie",
+              "de": "Kategorie",
+              "fr": "Catégorie",
+              "it": "Categoria",
+              "sv": "Kategori",
+              "no": "Kategori",
+              "es": "Categoría",
+              "da": "Kategori",
+              "ru": "Категория",
+              "pl": "Kategoria",
+              "ko": "카테고리"
+            },
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "category_condition",
+        "platforms": [
+          "local"
+        ],
+        "title": {
+          "en": "Category !{{is|isn't}}",
+          "nl": "Categorie !{{is|is niet}}",
+          "fr": "Catégorie !{{est|n'est pas}}",
+          "da": "Kategori !{{er|er ikke}}",
+          "de": "Kategorie !{{ist|ist nicht}}",
+          "es": "Categoría !{{está|no está}}",
+          "it": "Categoria !{{è|non è}}",
+          "no": "Kategori !{{er|er ikke}}",
+          "sv": "Kategori !{{är|är inte}}",
+          "pl": "Kategoria !{{jest|nie jest}}",
+          "ru": "Категория !{{есть|нет}}",
+          "ko": "카테고리 !{{이다|아니다}}"
+        },
+        "titleFormatted": {
+          "en": "Category !{{is|isn't}} [[category_condition]]",
+          "nl": "Categorie !{{is|is niet}} [[category_condition]]",
+          "fr": "Catégorie !{{est|n'est pas}} [[category_condition]]",
+          "da": "Kategori !{{er|er ikke}} [[category_condition]]",
+          "de": "Kategorie !{{ist|ist nicht}} [[category_condition]]",
+          "es": "Categoría !{{está|no está}} [[category_condition]]",
+          "it": "Categoria !{{è|non è}} [[category_condition]]",
+          "no": "Kategori !{{er|er ikke}} [[category_condition]]",
+          "sv": "Kategori !{{är|är inte}} [[category_condition]]",
+          "pl": "Kategoria !{{jest|nie jest}} [[category_condition]]",
+          "ru": "Категория !{{есть|нет}} [[category_condition]]",
+          "ko": "카테고리 !{{이다|아니다}} [[category_condition]]"
+        },
+        "args": [
+          {
+            "name": "category_condition",
+            "type": "text",
+            "title": {
+              "en": "Category",
+              "nl": "Categorie",
+              "de": "Kategorie",
+              "fr": "Catégorie",
+              "it": "Categoria",
+              "sv": "Kategori",
+              "no": "Kategori",
+              "es": "Categoría",
+              "da": "Kategori",
+              "ru": "Категория",
+              "pl": "Kategoria",
+              "ko": "카테고리"
+            },
+            "value": "None"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Schedule Event",
+          "nl": "Plan gebeurtenis",
+          "de": "Ereignis planen",
+          "fr": "Planifier un événement",
+          "it": "Pianifica evento",
+          "sv": "Schemalägg händelse",
+          "no": "Planlegg hendelse",
+          "es": "Programar evento",
+          "da": "Planlæg begivenhed",
+          "ru": "Запланировать событие",
+          "pl": "Zaplanuj wydarzenie",
+          "ko": "이벤트 예약"
+        },
+        "titleFormatted": {
+          "en": "Schedule Event [[message]] on [[date]] at [[time]] and use category [[category]]",
+          "nl": "Plan gebeurtenis [[message]] op [[date]] om [[time]] en gebruik categorie [[category]]",
+          "de": "Ereignis planen [[message]] am [[date]] um [[time]] und Kategorie [[category]] verwenden",
+          "fr": "Planifier l'événement [[message]] le [[date]] à [[time]] et utiliser la catégorie [[category]]",
+          "it": "Pianifica l'evento [[message]] il [[date]] alle [[time]] e usa la categoria [[category]]",
+          "sv": "Schemalägg händelsen [[message]] den [[date]] klockan [[time]] och använd kategorin [[category]]",
+          "no": "Planlegg hendelsen [[message]] den [[date]] klokken [[time]] og bruk kategorien [[category]]",
+          "es": "Programar el evento [[message]] el [[date]] a las [[time]] y usar la categoría [[category]]",
+          "da": "Planlæg begivenheden [[message]] den [[date]] klokken [[time]] og brug kategorien [[category]]",
+          "ru": "Запланировать событие [[message]] на [[date]] в [[time]] и использовать категорию [[category]]",
+          "pl": "Zaplanuj wydarzenie [[message]] na [[date]] o [[time]] i użyj kategorii [[category]]",
+          "ko": "이벤트 [[message]]를 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요"
+        },
+        "hint": {
+          "en": "This action allows you to schedule an event with a specific message at a given date and time. This card doesnt contain a recipient, so it can be used with apps that handle the message themselves.",
+          "nl": "Deze actie stelt je in staat om een gebeurtenis te plannen met een specifiek bericht op een bepaalde datum en tijd. Deze kaart bevat geen ontvanger, dus kan worden gebruikt met apps die het bericht zelf verwerken.",
+          "de": "Diese Aktion ermöglicht es dir, ein Ereignis mit einer bestimmten Nachricht zu einem bestimmten Datum und einer bestimmten Uhrzeit zu planen. Diese Karte enthält keinen Empfänger, sodass sie mit Apps verwendet werden kann, die die Nachricht selbst verarbeiten.",
+          "fr": "Cette action vous permet de planifier un événement avec un message spécifique à une date et une heure données. Cette carte ne contient pas de destinataire, elle peut donc être utilisée avec des applications qui gèrent elles-mêmes le message.",
+          "it": "Questa azione ti consente di pianificare un evento con un messaggio specifico in una data e ora specifiche. Questa scheda non contiene un destinatario, quindi può essere utilizzata con app che gestiscono il messaggio autonomamente.",
+          "sv": "Den här åtgärden låter dig schemalägga en händelse med ett specifikt meddelande på ett givet datum och tid. Detta kort innehåller ingen mottagare, så det kan användas med appar som hanterar meddelandet själva.",
+          "no": "Denne handlingen lar deg planlegge en hendelse med en spesifikk melding på en gitt dato og tid. Dette kortet inneholder ingen mottaker, så det kan brukes med apper som håndterer meldingen selv.",
+          "es": "Esta acción te permite programar un evento con un mensaje específico en una fecha y hora determinadas. Esta tarjeta no contiene un destinatario, por lo que se puede utilizar con aplicaciones que manejan el mensaje por sí mismas.",
+          "da": "Denne handling giver dig mulighed for at planlægge en begivenhed med en specifik besked på en given dato og tidspunkt. Dette kort indeholder ingen modtager, så det kan bruges med apps, der håndterer beskeden selv.",
+          "ru": "Это действие позволяет запланировать событие с определенным сообщением на заданную дату и время. Эта карточка не содержит получателя, поэтому ее можно использовать с приложениями, которые обрабатывают сообщение самостоятельно.",
+          "pl": "Ta akcja pozwala zaplanować wydarzenie z określonym komunikatem na daną datę i godzinę. Ta karta nie zawiera odbiorcy, więc można ją używać z aplikacjami, które same obsługują wiadomość.",
+          "ko": "이 작업을 사용하면 특정 날짜와 시간에 특정 메시지로 이벤트를 예약할 수 있습니다. 이 카드는 수신자를 포함하지 않으므로 메시지를 자체적으로 처리하는 앱과 함께 사용할 수 있습니다."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "text",
+            "name": "message",
+            "required": true,
+            "title": {
+              "en": "Message",
+              "nl": "Bericht",
+              "de": "Nachricht",
+              "fr": "Message",
+              "it": "Messaggio",
+              "sv": "Meddelande",
+              "no": "Melding",
+              "es": "Mensaje",
+              "da": "Besked",
+              "ru": "Сообщение",
+              "pl": "Wiadomość",
+              "ko": "메시지"
+            }
+          },
+          {
+            "type": "date",
+            "name": "date",
+            "required": true,
+            "title": {
+              "en": "Date",
+              "nl": "Datum",
+              "de": "Datum",
+              "fr": "Date",
+              "it": "Data",
+              "sv": "Datum",
+              "no": "Dato",
+              "es": "Fecha",
+              "da": "Dato",
+              "ru": "Дата",
+              "pl": "Data",
+              "ko": "날짜"
+            }
+          },
+          {
+            "type": "time",
+            "name": "time",
+            "required": true,
+            "title": {
+              "en": "Time",
+              "nl": "Tijd",
+              "de": "Zeit",
+              "fr": "Heure",
+              "it": "Ora",
+              "sv": "Tid",
+              "no": "Tid",
+              "es": "Hora",
+              "da": "Tid",
+              "ru": "Время",
+              "pl": "Czas",
+              "ko": "시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "category",
+            "required": false,
+            "title": {
+              "en": "Category",
+              "nl": "Categorie",
+              "de": "Kategorie",
+              "fr": "Catégorie",
+              "it": "Categoria",
+              "sv": "Kategori",
+              "no": "Kategori",
+              "es": "Categoría",
+              "da": "Kategori",
+              "ru": "Категория",
+              "pl": "Kategoria",
+              "ko": "카테고리"
+            },
+            "value": "None"
+          }
+        ],
+        "id": "set_scheduled_event"
+      },
+      {
+        "title": {
+          "en": "Schedule Message",
+          "nl": "Plan Bericht",
+          "de": "Nachricht planen",
+          "fr": "Planifier un message",
+          "it": "Pianifica messaggio",
+          "sv": "Schemalägg meddelande",
+          "no": "Planlegg melding",
+          "es": "Programar mensaje",
+          "da": "Planlæg besked",
+          "ru": "Запланировать сообщение",
+          "pl": "Zaplanuj wiadomość",
+          "ko": "메시지 예약"
+        },
+        "titleFormatted": {
+          "en": "Schedule Message [[message]] to [[recipient]] on [[date]] at [[time]] and use category [[category]]",
+          "nl": "Plan Bericht [[message]] naar [[recipient]] op [[date]] om [[time]] en gebruik categorie [[category]]",
+          "de": "Nachricht planen [[message]] an [[recipient]] am [[date]] um [[time]] und verwende Kategorie [[category]]",
+          "fr": "Planifier le message [[message]] à [[recipient]] le [[date]] à [[time]] et utiliser la catégorie [[category]]",
+          "it": "Pianifica il messaggio [[message]] a [[recipient]] il [[date]] alle [[time]] e usa la categoria [[category]]",
+          "sv": "Schemalägg meddelandet [[message]] till [[recipient]] den [[date]] klockan [[time]] och använd kategorin [[category]]",
+          "no": "Planlegg meldingen [[message]] til [[recipient]] den [[date]] klokken [[time]] og bruk kategorien [[category]]",
+          "es": "Programar el mensaje [[message]] a [[recipient]] el [[date]] a las [[time]] y usar la categoría [[category]]",
+          "da": "Planlæg beskeden [[message]] til [[recipient]] den [[date]] klokken [[time]] og brug kategorien [[category]]",
+          "ru": "Запланировать сообщение [[message]] для [[recipient]] на [[date]] в [[time]] и использовать категорию [[category]]",
+          "pl": "Zaplanuj wiadomość [[message]] do [[recipient]] na [[date]] o [[time]] i użyj kategorii [[category]]",
+          "ko": "메시지 [[message]]를 [[recipient]]에게 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요"
+        },
+        "hint": {
+          "en": "This action allows you to schedule an event with a specific message at a given date and time to a spefici receipient",
+          "nl": "Deze actie stelt je in staat om een evenement te plannen met een specifiek bericht op een bepaalde datum en tijd naar een specifieke ontvanger",
+          "de": "Diese Aktion ermöglicht es dir, ein Ereignis mit einer bestimmten Nachricht zu einem bestimmten Datum und einer bestimmten Uhrzeit an einen bestimmten Empfänger zu planen",
+          "fr": "Cette action vous permet de planifier un événement avec un message spécifique à une date et une heure données pour un destinataire spécifique",
+          "it": "Questa azione ti consente di pianificare un evento con un messaggio specifico in una data e ora specifiche per un destinatario specifico",
+          "sv": "Den här åtgärden låter dig schemalägga en händelse med ett specifikt meddelande på ett givet datum och tid till en specifik mottagare",
+          "no": "Denne handlingen lar deg planlegge en hendelse med en spesifikk melding på en gitt dato og tid til en spesifikk mottaker",
+          "es": "Esta acción te permite programar un evento con un mensaje específico en una fecha y hora determinadas para un destinatario específico",
+          "da": "Denne handling giver dig mulighed for at planlægge en begivenhed med en specifik besked på en given dato og tidspunkt til en specifik modtager",
+          "ru": "Это действие позволяет запланировать событие с определенным сообщением на заданную дату и время для конкретного получателя",
+          "pl": "Ta akcja pozwala zaplanować wydarzenie z określonym komunikatem na daną datę i godzinę dla konkretnego odbiorcy",
+          "ko": "이 작업을 사용하면 특정 날짜와 시간에 특정 수신자에게 특정 메시지로 이벤트를 예약할 수 있습니다."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "text",
+            "name": "recipient",
+            "required": true,
+            "title": {
+              "en": "Recipient",
+              "nl": "Ontvanger",
+              "de": "Empfänger",
+              "fr": "Destinataire",
+              "it": "Destinatario",
+              "sv": "Mottagare",
+              "no": "Mottaker",
+              "es": "Destinatario",
+              "da": "Modtager",
+              "ru": "Получатель",
+              "pl": "Odbiorca",
+              "ko": "수신자"
+            }
+          },
+          {
+            "type": "text",
+            "name": "message",
+            "required": true,
+            "title": {
+              "en": "Message",
+              "nl": "Bericht",
+              "de": "Nachricht",
+              "fr": "Message",
+              "it": "Messaggio",
+              "sv": "Meddelande",
+              "no": "Melding",
+              "es": "Mensaje",
+              "da": "Besked",
+              "ru": "Сообщение",
+              "pl": "Wiadomość",
+              "ko": "메시지"
+            }
+          },
+          {
+            "type": "date",
+            "name": "date",
+            "required": true,
+            "title": {
+              "en": "Date",
+              "nl": "Datum",
+              "de": "Datum",
+              "fr": "Date",
+              "it": "Data",
+              "sv": "Datum",
+              "no": "Dato",
+              "es": "Fecha",
+              "da": "Dato",
+              "ru": "Дата",
+              "pl": "Data",
+              "ko": "날짜"
+            }
+          },
+          {
+            "type": "time",
+            "name": "time",
+            "required": true,
+            "title": {
+              "en": "Time",
+              "nl": "Tijd",
+              "de": "Zeit",
+              "fr": "Heure",
+              "it": "Ora",
+              "sv": "Tid",
+              "no": "Tid",
+              "es": "Hora",
+              "da": "Tid",
+              "ru": "Время",
+              "pl": "Czas",
+              "ko": "시간"
+            }
+          },
+          {
+            "type": "text",
+            "name": "category",
+            "required": false,
+            "title": {
+              "en": "Category",
+              "nl": "Categorie",
+              "de": "Kategorie",
+              "fr": "Catégorie",
+              "it": "Categoria",
+              "sv": "Kategori",
+              "no": "Kategori",
+              "es": "Categoría",
+              "da": "Kategori",
+              "ru": "Категория",
+              "pl": "Kategoria",
+              "ko": "카테고리"
+            },
+            "value": "None"
+          }
+        ],
+        "id": "set_scheduled_message"
+      },
+      {
+        "title": {
+          "en": "Schedule Message",
+          "nl": "Plan Bericht",
+          "de": "Nachricht planen",
+          "fr": "Planifier un message",
+          "it": "Pianifica messaggio",
+          "sv": "Schemalägg meddelande",
+          "no": "Planlegg melding",
+          "es": "Programar mensaje",
+          "da": "Planlæg besked",
+          "ru": "Запланировать сообщение",
+          "pl": "Zaplanuj wiadomość",
+          "ko": "메시지 예약"
+        },
+        "titleFormatted": {
+          "en": "Schedule Message with raw data [[data]] and prefix [[prefix]] and use category [[category]]",
+          "nl": "Plan Bericht met ruwe gegevens [[data]] en prefix [[prefix]] en gebruik categorie [[category]]",
+          "de": "Nachricht planen mit Rohdaten [[data]] und Präfix [[prefix]] und Kategorie [[category]]",
+          "fr": "Planifier un message avec des données brutes [[data]] et un préfixe [[prefix]] et utiliser la catégorie [[category]]",
+          "it": "Pianifica messaggio con dati grezzi [[data]] e prefisso [[prefix]] e usa la categoria [[category]]",
+          "sv": "Schemalägg meddelande med rådata [[data]] och prefix [[prefix]] och använd kategori [[category]]",
+          "no": "Planlegg melding med rådata [[data]] og prefiks [[prefix]] og bruk kategori [[category]]",
+          "es": "Programar mensaje con datos sin procesar [[data]] y prefijo [[prefix]] y usar categoría [[category]]",
+          "da": "Planlæg besked med rådata [[data]] og præfiks [[prefix]] og brug kategori [[category]]",
+          "ru": "Запланировать сообщение с исходными данными [[data]] и префиксом [[prefix]] и использовать категорию [[category]]",
+          "pl": "Zaplanuj wiadomość z danymi surowymi [[data]] i prefiksem [[prefix]] oraz użyj kategorii [[category]]",
+          "ko": "원시 데이터 [[data]]와 접두사 [[prefix]]로 메시지를 예약하고 카테고리 [[category]]를 사용하세요"
+        },
+        "hint": {
+          "en": "This action allows you to schedule a message with raw data and an optional prefix to remove from the raw data. This card can be used with apps that handle the message themselves. Use this format: date|time|recipient|message. For example: 04-12-2025|12:00|+31612341234|Hello World. Or with a prefix: prefixToRemove##04-12-2025|12:00|+31612341234|Hello World",
+          "nl": "Deze actie stelt je in staat om een bericht te plannen met ruwe gegevens en een optioneel prefix om te verwijderen van de ruwe gegevens. Deze kaart kan worden gebruikt met apps die het bericht zelf verwerken. Gebruik dit formaat: datum|tijd|ontvanger|bericht. Bijvoorbeeld: 04-12-2025|12:00|+31612341234|Hallo Wereld. Of met een prefix: prefixTeVerwijderen##04-12-2025|12:00|+31612341234|Hallo Wereld.",
+          "de": "Diese Aktion ermöglicht es dir, eine Nachricht mit Rohdaten und einem optionalen Präfix zu planen, das von den Rohdaten entfernt werden soll. Diese Karte kann mit Apps verwendet werden, die die Nachricht selbst verarbeiten. Verwende dieses Format: Datum|Zeit|Empfänger|Nachricht. Zum Beispiel: 04-12-2025|12:00|+31612341234|Hallo Welt. Oder mit einem Präfix: zuEntfernendesPräfix##04-12-2025|12:00|+31612341234|Hallo Welt.",
+          "fr": "Cette action vous permet de planifier un message avec des données brutes et un préfixe facultatif à supprimer des données brutes. Cette carte peut être utilisée avec des applications qui gèrent elles-mêmes le message. Utilisez ce format : date|heure|destinataire|message. Par exemple : 04-12-2025|12:00|+31612341234|Bonjour le monde. Ou avec un préfixe : préfixeÀSupprimer##04-12-2025|12:00|+31612341234|Bonjour le monde.",
+          "it": "Questa azione ti consente di pianificare un messaggio con dati grezzi e un prefisso facoltativo da rimuovere dai dati grezzi. Questa scheda può essere utilizzata con app che gestiscono autonomamente il messaggio. Usa questo formato: data|ora|destinatario|messaggio. Ad esempio: 04-12-2025|12:00|+31612341234|Ciao Mondo. O con un prefisso: prefissoDaRimuovere##04-12-2025|12:00|+31612341234|Ciao Mondo.",
+          "sv": "Den här åtgärden låter dig schemalägga ett meddelande med rådata och ett valfritt prefix att ta bort från rådata. Detta kort kan användas med appar som hanterar meddelandet själva. Använd detta format: datum|tid|mottagare|meddelande. Till exempel: 04-12-2025|12:00|+31612341234|Hej världen. Eller med ett prefix: prefixAttTaBort##04-12-2025|12:00|+31612341234|Hej världen.",
+          "no": "Denne handlingen lar deg planlegge en melding med rådata og et valgfritt prefiks som skal fjernes fra rådataene. Dette kortet kan brukes med apper som håndterer meldingen selv. Bruk dette formatet: dato|tid|mottaker|melding. For eksempel: 04-12-2025|12:00|+31612341234|Hei verden. Eller med et prefiks: prefiksÅFjerne##04-12-2025|12:00|+31612341234|Hei verden.",
+          "es": "Esta acción te permite programar un mensaje con datos sin procesar y un prefijo opcional para eliminar de los datos sin procesar. Esta tarjeta se puede usar con aplicaciones que manejan el mensaje por sí mismas. Usa este formato: fecha|hora|destinatario|mensaje. Por ejemplo: 04-12-2025|12:00|+31612341234|Hola Mundo. O con un prefijo: prefijoAEliminar##04-12-2025|12:00|+31612341234|Hola Mundo.",
+          "da": "Denne handling giver dig mulighed for at planlægge en besked med rådata og et valgfrit præfiks, der skal fjernes fra rådataene. Dette kort kan bruges med apps, der håndterer beskeden selv. Brug dette format: dato|tid|modtager|besked. For eksempel: 04-12-2025|12:00|+31612341234|Hej Verden. Eller med et præfiks: præfiksAtFjerne##04-12-2025|12:00|+31612341234|Hej Verden.",
+          "ru": "Это действие позволяет запланировать сообщение с исходными данными и необязательным префиксом для удаления из исходных данных. Эта карточка может использоваться с приложениями, которые обрабатывают сообщение самостоятельно. Используйте этот формат: дата|время|получатель|сообщение. Например: 04-12-2025|12:00|+31612341234|Привет мир. Или с префиксом: префиксДляУдаления##04-12-2025|12:00|+31612341234|Привет мир.",
+          "pl": "Ta akcja pozwala zaplanować wiadomość z danymi surowymi i opcjonalnym prefiksem do usunięcia z danych surowych. Ta karta może być używana z aplikacjami, które same obsługują wiadomość. Użyj tego formatu: data|czas|odbiorca|wiadomość. Na przykład: 04-12-2025|12:00|+31612341234|Cześć świecie. Lub z prefiksem: prefiksDoUsunięcia##04-12-2025|12:00|+31612341234|Cześć świecie.",
+          "ko": "이 작업을 사용하면 원시 데이터와 원시 데이터에서 제거할 선택적 접두사로 메시지를 예약할 수 있습니다. 이 카드는 메시지를 자체적으로 처리하는 앱과 함께 사용할 수 있습니다. 이 형식을 사용하세요: 날짜|시간|수신자|메시지. 예: 04-12-2025|12:00|+31612341234|안녕하세요 세계. 또는 접두사와 함께: 제거할접두사##04-12-2025|12:00|+31612341234|안녕하세요 세계."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "text",
+            "name": "data",
+            "required": true,
+            "title": {
+              "en": "date|time|recipient|message",
+              "nl": "datum|tijd|ontvanger|bericht",
+              "de": "Datum|Zeit|Empfänger|Nachricht",
+              "fr": "date|heure|destinataire|message",
+              "it": "data|ora|destinatario|messaggio",
+              "sv": "datum|tid|mottagare|meddelande",
+              "no": "dato|tid|mottaker|melding",
+              "es": "fecha|hora|destinatario|mensaje",
+              "da": "dato|tid|modtager|besked",
+              "ru": "дата|время|получатель|сообщение",
+              "pl": "data|czas|odbiorca|wiadomość",
+              "ko": "날짜|시간|수신자|메시지"
+            }
+          },
+          {
+            "type": "text",
+            "name": "prefix",
+            "required": false,
+            "title": {
+              "en": "Prefix to remove from the raw data",
+              "nl": "Prefix om te verwijderen van de ruwe gegevens",
+              "de": "Präfix zum Entfernen der Rohdaten",
+              "fr": "Préfixe à supprimer des données brutes",
+              "it": "Prefisso da rimuovere dai dati grezzi",
+              "sv": "Prefix att ta bort från rådata",
+              "no": "Prefiks å fjerne fra rådata",
+              "es": "Prefijo a eliminar de los datos sin procesar",
+              "da": "Præfiks at fjerne fra rådata",
+              "ru": "Префикс для удаления из исходных данных",
+              "pl": "Prefiks do usunięcia z danych surowych",
+              "ko": "원시 데이터에서 제거할 접두사"
+            },
+            "value": "##"
+          },
+          {
+            "type": "text",
+            "name": "category",
+            "required": false,
+            "title": {
+              "en": "Category",
+              "nl": "Categorie",
+              "de": "Kategorie",
+              "fr": "Catégorie",
+              "it": "Categoria",
+              "sv": "Kategori",
+              "no": "Kategori",
+              "es": "Categoría",
+              "da": "Kategori",
+              "ru": "Категория",
+              "pl": "Kategoria",
+              "ko": "카테고리"
+            },
+            "value": "None"
+          }
+        ],
+        "id": "set_scheduled_message_raw"
+      }
+    ]
+  }
+}

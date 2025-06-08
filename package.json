@@ -1,0 +1,9 @@
+{
+  "name": "com.schedule.message",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {},
+  "dependencies": {
+    "luxon": "^3.6.1"
+  }
+}

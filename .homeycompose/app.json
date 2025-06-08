@@ -1,0 +1,327 @@
+{
+  "id": "com.schedule.message",
+  "version": "0.0.0",
+  "compatibility": ">=12.0.1",
+  "sdk": 3,
+  "permissions": [],
+  "brandColor": "#4B0082",
+  "platforms": ["local"],
+  "name": {
+    "en": "Schedule Message",
+    "nl": "Bericht plannen",
+    "de": "Nachricht planen",
+    "fr": "Planifier un message",
+    "it": "Pianifica messaggio",
+    "sv": "Schemalägg meddelande",
+    "no": "Planlegg melding",
+    "es": "Programar mensaje",
+    "da": "Planlæg besked",
+    "ru": "Запланировать сообщение",
+    "pl": "Zaplanować wiadomość",
+    "ko": "메시지 예약"
+  },
+  "description": {
+    "en": "Easily schedule messages to be sent at any time from your Homey.",
+    "nl": "Plan eenvoudig berichten om op elk moment van je Homey te worden verzonden.",
+    "de": "Planen Sie Nachrichten, die zu jeder Zeit von Ihrem Homey gesendet werden.",
+    "fr": "Planifiez facilement des messages à envoyer à tout moment depuis votre Homey.",
+    "it": "Pianifica facilmente i messaggi da inviare in qualsiasi momento dal tuo Homey.",
+    "sv": "Schemalägg enkelt meddelanden som ska skickas när som helst från din Homey.",
+    "no": "Planlegg enkelt meldinger som skal sendes når som helst fra din Homey.",
+    "es": "Programa fácilmente mensajes para que se envíen en cualquier momento desde tu Homey.",
+    "da": "Planlæg nemt beskeder, der skal sendes når som helst fra din Homey.",
+    "ru": "Легко запланируйте отправку сообщений в любое время с вашего Homey.",
+    "pl": "Łatwo zaplanuj wysyłanie wiadomości o dowolnej porze z Homey.",
+    "ko": "언제든지 Homey에서 보낼 메시지를 쉽게 예약하세요."
+  },
+  "category": ["internet"],
+  "images": {
+    "small": "/assets/images/small.jpg",
+    "large": "/assets/images/large.jpg",
+    "xlarge": "/assets/images/xlarge.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "homey@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "homey@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 Martijn Poppen"
+      },
+        {
+            "name": "🇳🇱 Martijn Poppen"
+        },
+        {
+            "name": "🇩🇪 Martijn Poppen"
+        },
+        {
+            "name": "🇫🇷 Martijn Poppen"
+        },
+        {
+            "name": "🇮🇹 Martijn Poppen"
+        },
+        {
+            "name": "🇸🇪 Martijn Poppen"
+        },
+        {
+            "name": "🇳🇴 Martijn Poppen"
+        },
+        {
+            "name": "🇪🇸 Martijn Poppen"
+        },
+        {
+            "name": "🇩🇰 Martijn Poppen"
+        },
+        {
+            "name": "🇷🇺 Martijn Poppen"
+        },
+        {
+            "name": "🇵🇱 Martijn Poppen"
+        },
+        {
+            "name": "🇰🇷 Martijn Poppen"
+        }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      },
+      "bunq": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "tags": {
+    "en": [
+      "message",
+      "schedule",
+      "timer",
+      "notification",
+      "reminder",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "nl": [
+      "bericht",
+      "planning",
+      "timer",
+      "notificatie",
+      "herinnering",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "de": [
+      "Nachricht",
+      "Zeitplan",
+      "Timer",
+      "Benachrichtigung",
+      "Erinnerung",
+      "WhatsApp",
+      "Telegram",
+      "E-Mail",
+      "SMS",
+      "Push",
+      "Homey",
+      "HomeyPro",
+      "Slack",
+      "Discord",
+      "Teams",
+      "Signal"
+    ],
+    "fr": [
+      "message",
+      "planification",
+      "minuteur",
+      "notification",
+      "rappel",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "it": [
+      "messaggio",
+      "programmazione",
+      "timer",
+      "notifica",
+      "promemoria",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "sv": [
+      "meddelande",
+      "schema",
+      "timer",
+      "avisering",
+      "påminnelse",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "no": [
+      "melding",
+      "planlegging",
+      "timer",
+      "varsling",
+      "påminnelse",
+      "whatsapp",
+      "telegram",
+      "e-post",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "es": [
+      "mensaje",
+      "programación",
+      "temporizador",
+      "notificación",
+      "recordatorio",
+      "whatsapp",
+      "telegram",
+      "correo electrónico",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "da": [
+      "besked",
+      "planlægning",
+      "timer",
+      "underretning",
+      "påmindelse",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "ru": [
+      "сообщение",
+      "расписание",
+      "таймер",
+      "уведомление",
+      "напоминание",
+      "whatsapp",
+      "telegram",
+      "электронная почта",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "pl": [
+      "wiadomość",
+      "planowanie",
+      "timer",
+      "powiadomienie",
+      "przypomnienie",
+      "whatsapp",
+      "telegram",
+      "email",
+      "sms",
+      "push",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ],
+    "ko": [
+      "메시지",
+      "예약",
+      "타이머",
+      "알림",
+      "알림",
+      "whatsapp",
+      "telegram",
+      "이메일",
+      "sms",
+      "푸시",
+      "homey",
+      "homeypro",
+      "slack",
+      "discord",
+      "teams",
+      "signal"
+    ]
+  },
+  "bugs": {
+    "url": "https://community.homey.app/t/131942"
+  },
+  "source": "https://github.com/martijnpoppen/com.schedule.message",
+  "homeyCommunityTopicId": 131942,
+  "support": "https://community.homey.app/t/131942"
+}
