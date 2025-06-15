@@ -1,0 +1,67 @@
+{
+  "title": {
+    "en": "Remove scheduled messages",
+    "nl": "Verwijder geplande berichten",
+    "de": "Geplante Nachrichten entfernen",
+    "fr": "Supprimer les messages planifiés",
+    "it": "Rimuovi i messaggi pianificati",
+    "sv": "Ta bort schemalagda meddelanden",
+    "no": "Fjern planlagte meldinger",
+    "es": "Eliminar mensajes programados",
+    "da": "Fjern planlagte beskeder",
+    "ru": "Удалить запланированные сообщения",
+    "pl": "Usuń zaplanowane wiadomości",
+    "ko": "예약된 메시지 제거"
+  },
+  "titleFormatted": {
+    "en": "Remove scheduled messages from [[category]]",
+    "nl": "Verwijder geplande berichten van [[category]]",
+    "de": "Geplante Nachrichten von [[category]] entfernen",
+    "fr": "Supprimer les messages planifiés de [[category]]",
+    "it": "Rimuovi i messaggi pianificati da [[category]]",
+    "sv": "Ta bort schemalagda meddelanden från [[category]]",
+    "no": "Fjern planlagte meldinger fra [[category]]",
+    "es": "Eliminar mensajes programados de [[category]]",
+    "da": "Fjern planlagte beskeder fra [[category]]",
+    "ru": "Удалить запланированные сообщения из [[category]]",
+    "pl": "Usuń zaplanowane wiadomości z [[category]]",
+    "ko": "[[category]]에서 예약된 메시지 제거"
+  },
+  "hint": {
+    "en": "This action will remove scheduled messages from the system",
+    "nl": "Deze actie verwijdert geplande berichten uit het systeem",
+    "de": "Diese Aktion entfernt geplante Nachrichten aus dem System",
+    "fr": "Cette action supprimera les messages planifiés du système",
+    "it": "Questa azione rimuoverà i messaggi pianificati dal sistema",
+    "sv": "Den här åtgärden tar bort schemalagda meddelanden från systemet",
+    "no": "Denne handlingen vil fjerne planlagte meldinger fra systemet",
+    "es": "Esta acción eliminará los mensajes programados del sistema",
+    "da": "Denne handling fjerner planlagte beskeder fra systemet",
+    "ru": "Это действие удалит запланированные сообщения из системы",
+    "pl": "Ta akcja usunie zaplanowane wiadomości z systemu",
+    "ko": "이 작업은 시스템에서 예약된 메시지를 제거합니다."
+  },
+  "platforms": ["local"],
+  "args": [
+    {
+      "type": "text",
+      "name": "category",
+      "required": false,
+      "title": {
+        "en": "Category (leave empty for all)",
+        "nl": "Categorie (laat leeg voor alle)",
+        "de": "Kategorie (leer lassen für alle)",
+        "fr": "Catégorie (laisser vide pour tout)",
+        "it": "Categoria (lascia vuoto per tutte)",
+        "sv": "Kategori (lämna tom för alla)",
+        "no": "Kategori (la stå tom for alle)",
+        "es": "Categoría (dejar vacío para todos)",
+        "da": "Kategori (lad være tom for alle)",
+        "ru": "Категория (оставьте пустым для всех)",
+        "pl": "Kategoria (pozostaw puste dla wszystkich)",
+        "ko": "카테고리 (모두에 대해 비워 두기)"
+      },
+      "value": ""
+    }
+  ]
+}

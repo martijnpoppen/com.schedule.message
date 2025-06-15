@@ -4,6 +4,7 @@
   "main": "app.js",
   "scripts": {},
   "dependencies": {
-    "luxon": "^3.6.1"
+    "luxon": "^3.6.1",
+    "uuid": "^11.1.0"
   }
 }

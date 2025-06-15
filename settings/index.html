@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- The '/homey.js' script must be included in your settings view to work -->
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <link rel="stylesheet" href="./tabs.css">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .homey-button-secondary {
+            background: black
+        }
+
+        .homey-header {
+            margin-bottom: 0px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="homey-header">
+        <h1 class="homey-title tab-title" data-i18n="settings.overview"></h1>
+        <div class="tabs">
+            <div class="tab active" data-tab="1" data-title_i18n="overview">Overview</div>
+            <div class="tab" data-tab="2" data-title_i18n="new">Add Message</div>
+        </div>
+    </header>
+    <div class="tab-content active" id="tab-content-1">
+        <button id="refresh" class="homey-button-primary">Refresh Messages</button>
+        <br>
+        <br>
+        <div id="table"></div>
+    </div>
+    <div class="tab-content" id="tab-content-2">
+        <fieldset class="homey-form-fieldset">
+            <div class="homey-form-group">
+                <label class="homey-form-label" for="recipient">Recipient (optional)</label>
+                <input class="homey-form-input" id="recipient" type="text" value="" />
+            </div>
+            <div class="homey-form-group">
+                <label class="homey-form-label" for="date">Date</label>
+                <input class="homey-form-input" id="date" type="datetime-local" value="" />
+            </div>
+
+            <div class="homey-form-group">
+                <label class="homey-form-label" for="message">Message</label>
+                <input class="homey-form-input" id="message" type="text" value="" />
+            </div>
+
+            <div class="homey-form-group">
+                <label class="homey-form-label" for="category">Category</label>
+                <input class="homey-form-input" id="category" type="text" value="None" />
+            </div>
+        </fieldset>
+
+        <button id="save" class="homey-button-primary-full">Schedule Message</button>
+        <br>
+    </div>
+
+    <script type="text/javascript">
+        // a method named 'onHomeyReady' must be present in your code
+        function onHomeyReady (Homey) {
+            // Tell Homey we're ready to be displayed
+            Homey.ready();
+            var refreshElement = document.getElementById("refresh");
+            refreshElement.addEventListener("click", function () {
+                // check if the button is already loading
+                if (refreshElement.classList.contains("is-loading")) {
+                    return; // Prevent multiple clicks while loading
+                }
+                // When the button is clicked, reload the messages
+                loadMessages();
+            });
+            var saveElement = document.getElementById("save");
+            saveElement.addEventListener("click", function () {
+                // check if the button is already loading
+                if (saveElement.classList.contains("is-loading")) {
+                    return; // Prevent multiple clicks while loading
+                }
+                // When the button is clicked, schedule a new message
+                scheduleMessage();
+            });
+
+            loadMessages();
+
+        }
+
+        function deleteMessage (id) {
+            Homey.api('DELETE', `/queue/?id=${id}`, {})
+                .then((result) => {
+                    console.log('Delete result:', result);
+                    // Reload the messages after deletion
+                    loadMessages();
+                })
+                .catch(err => Homey.alert(err));
+        }
+
+        function loadMessages () {
+            var refreshElement = document.getElementById("refresh");
+            refreshElement.classList.add("is-loading");
+            Homey.api('GET', '/queue', {})
+                .then((result) => {
+                    console.log('Queue result:', result);
+                    var tableElement = document.getElementById("table");
+                    // Clear any existing content in the table element
+                    tableElement.innerHTML = '';
+
+                    if (result && result.length) {
+                        // If there are messages in the queue, show them in a table
+                        var table = document.createElement('table');
+                        table.className = 'homey-table';
+                        table.innerHTML = `
+                            <tr>
+                                <th>Messages</th>
+                                <th>Delete?</th>
+                            </tr>
+                            `;
+                        result.forEach(item => {
+                            var row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td><strong>Recipient:</strong> ${item.recipient}<br>
+                                <strong>Message:</strong> ${item.message}<br>
+                                <strong>Scheduled:</strong> ${new Date(item.scheduledDateTime).toLocaleString()}<br>
+                                <strong>Category:</strong> ${item.category}</>
+                                <td>
+                                    <button class="homey-button-secondary" onclick="deleteMessage('${item.id}')">
+                                        Delete
+                                    </button>
+                                </td>
+                            `;
+                            table.appendChild(row);
+                        });
+                        tableElement.appendChild(table);
+                    } else {
+                        // If there are no messages in the queue, show a message
+                        var table = document.createElement('table');
+                        table.className = 'homey-table';
+                        table.innerHTML = `
+                            <tr>
+                                <th>Messages</th>
+                                
+                            </tr>
+                            `;
+
+                        var row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td colspan="2">No messages scheduled.</td>
+                        `;
+                        table.appendChild(row);
+                        tableElement.appendChild(table);
+                    }
+
+                    setTimeout(() => {
+                        refreshElement.classList.remove("is-loading");
+                    }, 1000);
+
+                })
+                .catch(err => Homey.alert(err));
+        }
+
+        function scheduleMessage () {
+            var recipient = document.getElementById("recipient").value;
+            var date = document.getElementById("date").value;
+            var message = document.getElementById("message").value;
+            var category = document.getElementById("category").value;
+            var saveElement = document.getElementById("save");
+            saveElement.classList.add("is-loading");
+
+            if (!date || !message) {
+                Homey.alert('Please fill in all required fields.');
+                return;
+            }
+
+            var time = date.split('T')[1]; // Extract time from datetime-local input
+            time = time.replace('Z', ''); // Remove 'Z' if present
+            date = date.split('T')[0]; // Extract date from datetime-local input
+
+            Homey.api('POST', '/queue', {
+                recipient: recipient,
+                message: message,
+                date: date,
+                time: time,
+                category: category
+            })
+                .then((result) => {
+                    console.log('Schedule result:', result);
+                    // Reload the messages after scheduling
+                    loadMessages();
+                    
+
+                    // reload the page
+                    setTimeout(() => {
+                        saveElement.classList.remove("is-loading");
+                        window.location.reload();
+                    }, 1000);
+                })
+                .catch(err => {
+                    Homey.alert(err)
+                    saveElement.classList.remove("is-loading");
+                });
+        }
+    </script>
+    <script type="text/javascript" src="./tabs.js"></script>
+</body>
+
+</html>

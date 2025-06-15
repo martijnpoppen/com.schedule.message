@@ -1,44 +1,14 @@
 {
   "1.0.0": {
-    "en": "NEW: Hide My Device - first release"
-  },
-  "1.0.1": {
-    "en": " NEW: Hide My Device - first release"
+    "en": "first release"
   },
   "1.0.2": {
-    "en": "NEW: Hide My Device - first release"
-  },
-  "1.0.3": {
-    "en": "NEW: prevent install on older Homey Pro's"
-  },
-  "1.0.4": {
-    "en": "OPT: remove permissions"
-  },
-  "1.0.5": {
-    "en": "NEW: add urls"
-  },
-  "1.0.6": {
-    "en": "OPT: improve explaination"
-  },
-  "1.0.7": {
-    "en": "OPT: improve explaination"
-  },
-  "1.0.8": {
-    "en": "FIX: set permssions"
-  },
-  "1.0.9": {
-    "en": "FIX: settings"
-  },
-  "1.0.10": {
-    "en": "FIX: settings"
+    "en": "APP Release"
   },
   "1.1.0": {
-    "en": "NEW: branding"
+    "en": "NEW: add settings page | NEW: add delete flowcard"
   },
   "1.1.1": {
-    "en": "NEW: branding"
-  },
-  "1.1.2": {
-    "en": "update forum topic"
+    "en": "FIX: update hint for raw message"
   }
 }

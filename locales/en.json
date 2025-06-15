@@ -1,1 +1,6 @@
-{}
+{
+    "settings": {
+        "overview": "Scheduled messages",
+        "new": "New scheduled message"
+    }
+}

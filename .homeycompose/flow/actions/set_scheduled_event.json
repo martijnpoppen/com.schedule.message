@@ -1,0 +1,124 @@
+{
+  "title": {
+    "en": "Schedule Event",
+    "nl": "Plan gebeurtenis",
+    "de": "Ereignis planen",
+    "fr": "Planifier un événement",
+    "it": "Pianifica evento",
+    "sv": "Schemalägg händelse",
+    "no": "Planlegg hendelse",
+    "es": "Programar evento",
+    "da": "Planlæg begivenhed",
+    "ru": "Запланировать событие",
+    "pl": "Zaplanuj wydarzenie",
+    "ko": "이벤트 예약"
+  },
+  "titleFormatted": {
+    "en": "Schedule Event [[message]] on [[date]] at [[time]] and use category [[category]]",
+    "nl": "Plan gebeurtenis [[message]] op [[date]] om [[time]] en gebruik categorie [[category]]",
+    "de": "Ereignis planen [[message]] am [[date]] um [[time]] und Kategorie [[category]] verwenden",
+    "fr": "Planifier l'événement [[message]] le [[date]] à [[time]] et utiliser la catégorie [[category]]",
+    "it": "Pianifica l'evento [[message]] il [[date]] alle [[time]] e usa la categoria [[category]]",
+    "sv": "Schemalägg händelsen [[message]] den [[date]] klockan [[time]] och använd kategorin [[category]]",
+    "no": "Planlegg hendelsen [[message]] den [[date]] klokken [[time]] og bruk kategorien [[category]]",
+    "es": "Programar el evento [[message]] el [[date]] a las [[time]] y usar la categoría [[category]]",
+    "da": "Planlæg begivenheden [[message]] den [[date]] klokken [[time]] og brug kategorien [[category]]",
+    "ru": "Запланировать событие [[message]] на [[date]] в [[time]] и использовать категорию [[category]]",
+    "pl": "Zaplanuj wydarzenie [[message]] na [[date]] o [[time]] i użyj kategorii [[category]]",
+    "ko": "이벤트 [[message]]를 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요"
+  },
+  "hint": {
+    "en": "This action allows you to schedule an event with a specific message at a given date and time. This card doesnt contain a recipient, so it can be used with apps that handle the message themselves.",
+    "nl": "Deze actie stelt je in staat om een gebeurtenis te plannen met een specifiek bericht op een bepaalde datum en tijd. Deze kaart bevat geen ontvanger, dus kan worden gebruikt met apps die het bericht zelf verwerken.",
+    "de": "Diese Aktion ermöglicht es dir, ein Ereignis mit einer bestimmten Nachricht zu einem bestimmten Datum und einer bestimmten Uhrzeit zu planen. Diese Karte enthält keinen Empfänger, sodass sie mit Apps verwendet werden kann, die die Nachricht selbst verarbeiten.",
+    "fr": "Cette action vous permet de planifier un événement avec un message spécifique à une date et une heure données. Cette carte ne contient pas de destinataire, elle peut donc être utilisée avec des applications qui gèrent elles-mêmes le message.",
+    "it": "Questa azione ti consente di pianificare un evento con un messaggio specifico in una data e ora specifiche. Questa scheda non contiene un destinatario, quindi può essere utilizzata con app che gestiscono il messaggio autonomamente.",
+    "sv": "Den här åtgärden låter dig schemalägga en händelse med ett specifikt meddelande på ett givet datum och tid. Detta kort innehåller ingen mottagare, så det kan användas med appar som hanterar meddelandet själva.",
+    "no": "Denne handlingen lar deg planlegge en hendelse med en spesifikk melding på en gitt dato og tid. Dette kortet inneholder ingen mottaker, så det kan brukes med apper som håndterer meldingen selv.",
+    "es": "Esta acción te permite programar un evento con un mensaje específico en una fecha y hora determinadas. Esta tarjeta no contiene un destinatario, por lo que se puede utilizar con aplicaciones que manejan el mensaje por sí mismas.",
+    "da": "Denne handling giver dig mulighed for at planlægge en begivenhed med en specifik besked på en given dato og tidspunkt. Dette kort indeholder ingen modtager, så det kan bruges med apps, der håndterer beskeden selv.",
+    "ru": "Это действие позволяет запланировать событие с определенным сообщением на заданную дату и время. Эта карточка не содержит получателя, поэтому ее можно использовать с приложениями, которые обрабатывают сообщение самостоятельно.",
+    "pl": "Ta akcja pozwala zaplanować wydarzenie z określonym komunikatem na daną datę i godzinę. Ta karta nie zawiera odbiorcy, więc można ją używać z aplikacjami, które same obsługują wiadomość.",
+    "ko": "이 작업을 사용하면 특정 날짜와 시간에 특정 메시지로 이벤트를 예약할 수 있습니다. 이 카드는 수신자를 포함하지 않으므로 메시지를 자체적으로 처리하는 앱과 함께 사용할 수 있습니다."
+  },
+  "platforms": ["local"],
+  "args": [
+    {
+      "type": "text",
+      "name": "message",
+      "required": true,
+      "title": {
+        "en": "Message",
+        "nl": "Bericht",
+        "de": "Nachricht",
+        "fr": "Message",
+        "it": "Messaggio",
+        "sv": "Meddelande",
+        "no": "Melding",
+        "es": "Mensaje",
+        "da": "Besked",
+        "ru": "Сообщение",
+        "pl": "Wiadomość",
+        "ko": "메시지"
+      }
+    },
+    {
+      "type": "date",
+      "name": "date",
+      "required": true,
+      "title": {
+        "en": "Date",
+        "nl": "Datum",
+        "de": "Datum",
+        "fr": "Date",
+        "it": "Data",
+        "sv": "Datum",
+        "no": "Dato",
+        "es": "Fecha",
+        "da": "Dato",
+        "ru": "Дата",
+        "pl": "Data",
+        "ko": "날짜"
+      }
+    },
+    {
+      "type": "time",
+      "name": "time",
+      "required": true,
+      "title": {
+        "en": "Time",
+        "nl": "Tijd",
+        "de": "Zeit",
+        "fr": "Heure",
+        "it": "Ora",
+        "sv": "Tid",
+        "no": "Tid",
+        "es": "Hora",
+        "da": "Tid",
+        "ru": "Время",
+        "pl": "Czas",
+        "ko": "시간"
+      }
+    },
+    {
+      "type": "text",
+      "name": "category",
+      "required": false,
+      "title": {
+        "en": "Category",
+        "nl": "Categorie",
+        "de": "Kategorie",
+        "fr": "Catégorie",
+        "it": "Categoria",
+        "sv": "Kategori",
+        "no": "Kategori",
+        "es": "Categoría",
+        "da": "Kategori",
+        "ru": "Категория",
+        "pl": "Kategoria",
+        "ko": "카테고리"
+      },
+      "value": "None"
+    }
+  ]
+}

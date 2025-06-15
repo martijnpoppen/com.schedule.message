@@ -3,7 +3,7 @@ Schedule Message is a Homey app that allows you to send messages at a specific t
 Features:
 - Schedule messages to be sent at a specific date and time.
 - Supports categories for organizing or filtering scheduled messages.
-- Compatible with other Homey apps that can process messages (e.g.cTelegram, WhatsApp, Signal, Slack).
+- Compatible with other Homey apps that can process messages (e.g. Telegram, WhatsApp, Signal, Slack).
 - Optionally specify a recipient for each message.
 - Supports raw data input for advanced integrations.
 

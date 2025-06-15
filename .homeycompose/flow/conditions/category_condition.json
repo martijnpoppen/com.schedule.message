@@ -1,0 +1,56 @@
+{
+    "id": "category_condition",
+    "platforms": [
+        "local"
+    ],
+    "title": {
+        "en": "Category !{{is|isn't}}",
+        "nl": "Categorie !{{is|is niet}}",
+        "fr": "Catégorie !{{est|n'est pas}}",
+        "da": "Kategori !{{er|er ikke}}",
+        "de": "Kategorie !{{ist|ist nicht}}",
+        "es": "Categoría !{{está|no está}}",
+        "it": "Categoria !{{è|non è}}",
+        "no": "Kategori !{{er|er ikke}}",
+        "sv": "Kategori !{{är|är inte}}",
+        "pl": "Kategoria !{{jest|nie jest}}",
+        "ru": "Категория !{{есть|нет}}",
+        "ko": "카테고리 !{{이다|아니다}}"
+    },
+    "titleFormatted": {
+        "en": "Category !{{is|isn't}} [[category_condition]]",
+        "nl": "Categorie !{{is|is niet}} [[category_condition]]",
+        "fr": "Catégorie !{{est|n'est pas}} [[category_condition]]",
+        "da": "Kategori !{{er|er ikke}} [[category_condition]]",
+        "de": "Kategorie !{{ist|ist nicht}} [[category_condition]]",
+        "es": "Categoría !{{está|no está}} [[category_condition]]",
+        "it": "Categoria !{{è|non è}} [[category_condition]]",
+        "no": "Kategori !{{er|er ikke}} [[category_condition]]",
+        "sv": "Kategori !{{är|är inte}} [[category_condition]]",
+        "pl": "Kategoria !{{jest|nie jest}} [[category_condition]]",
+        "ru": "Категория !{{есть|нет}} [[category_condition]]",
+        "ko": "카테고리 !{{이다|아니다}} [[category_condition]]"
+
+    },
+    "args": [
+        {
+            "name": "category_condition",
+            "type": "text",
+            "title": {
+                "en": "Category",
+                "nl": "Categorie",
+                "de": "Kategorie",
+                "fr": "Catégorie",
+                "it": "Categoria",
+                "sv": "Kategori",
+                "no": "Kategori",
+                "es": "Categoría",
+                "da": "Kategori",
+                "ru": "Категория",
+                "pl": "Kategoria",
+                "ko": "카테고리"
+            },
+            "value": "None"
+        }
+    ]
+}
