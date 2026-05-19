@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.schedule.message",
-  "version": "1.1.1",
+  "version": "1.3.0",
   "compatibility": ">=12.0.1",
   "sdk": 3,
   "permissions": [],
@@ -24,18 +24,18 @@
     "ko": "메시지 예약"
   },
   "description": {
-    "en": "Easily schedule messages to be sent at any time from your Homey.",
-    "nl": "Plan eenvoudig berichten om op elk moment van je Homey te worden verzonden.",
-    "de": "Planen Sie Nachrichten, die zu jeder Zeit von Ihrem Homey gesendet werden.",
-    "fr": "Planifiez facilement des messages à envoyer à tout moment depuis votre Homey.",
-    "it": "Pianifica facilmente i messaggi da inviare in qualsiasi momento dal tuo Homey.",
-    "sv": "Schemalägg enkelt meddelanden som ska skickas när som helst från din Homey.",
-    "no": "Planlegg enkelt meldinger som skal sendes når som helst fra din Homey.",
-    "es": "Programa fácilmente mensajes para que se envíen en cualquier momento desde tu Homey.",
-    "da": "Planlæg nemt beskeder, der skal sendes når som helst fra din Homey.",
-    "ru": "Легко запланируйте отправку сообщений в любое время с вашего Homey.",
-    "pl": "Łatwo zaplanuj wysyłanie wiadomości o dowolnej porze z Homey.",
-    "ko": "언제든지 Homey에서 보낼 메시지를 쉽게 예약하세요."
+    "en": "Easily schedule messages to be sent at any time",
+    "nl": "Plan eenvoudig berichten om op elk gewenst moment te verzenden",
+    "de": "Planen Sie Nachrichten, die zu jeder Zeit gesendet werden sollen",
+    "fr": "Planifiez facilement l'envoi de messages à tout moment",
+    "it": "Pianifica facilmente l'invio di messaggi in qualsiasi momento",
+    "sv": "Schemalägg enkelt meddelanden som ska skickas när som helst",
+    "no": "Planlegg enkelt meldinger som skal sendes når som helst",
+    "es": "Programa fácilmente mensajes para que se envíen en cualquier momento",
+    "da": "Planlæg nemt beskeder, der skal sendes når som helst",
+    "ru": "Легко запланируйте отправку сообщений в любое время",
+    "pl": "Łatwo zaplanuj wysyłanie wiadomości w dowolnym momencie",
+    "ko": "언제든지 보낼 메시지를 쉽게 예약하세요"
   },
   "api": {
     "GetQueue": {
@@ -578,18 +578,18 @@
           "ko": "이벤트 예약"
         },
         "titleFormatted": {
-          "en": "Schedule Event [[message]] on [[date]] at [[time]] and use category [[category]]",
-          "nl": "Plan gebeurtenis [[message]] op [[date]] om [[time]] en gebruik categorie [[category]]",
-          "de": "Ereignis planen [[message]] am [[date]] um [[time]] und Kategorie [[category]] verwenden",
-          "fr": "Planifier l'événement [[message]] le [[date]] à [[time]] et utiliser la catégorie [[category]]",
-          "it": "Pianifica l'evento [[message]] il [[date]] alle [[time]] e usa la categoria [[category]]",
-          "sv": "Schemalägg händelsen [[message]] den [[date]] klockan [[time]] och använd kategorin [[category]]",
-          "no": "Planlegg hendelsen [[message]] den [[date]] klokken [[time]] og bruk kategorien [[category]]",
-          "es": "Programar el evento [[message]] el [[date]] a las [[time]] y usar la categoría [[category]]",
-          "da": "Planlæg begivenheden [[message]] den [[date]] klokken [[time]] og brug kategorien [[category]]",
-          "ru": "Запланировать событие [[message]] на [[date]] в [[time]] и использовать категорию [[category]]",
-          "pl": "Zaplanuj wydarzenie [[message]] na [[date]] o [[time]] i użyj kategorii [[category]]",
-          "ko": "이벤트 [[message]]를 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요"
+          "en": "Schedule Event [[message]] on [[date]] at [[time]] and use category [[category]] (optionally remove a prefix from the message: [[prefix]])",
+          "nl": "Plan gebeurtenis [[message]] op [[date]] om [[time]] en gebruik categorie [[category]] (optioneel een voorvoegsel uit het bericht verwijderen: [[prefix]])",
+          "de": "Ereignis planen [[message]] am [[date]] um [[time]] und Kategorie [[category]] verwenden (optional ein Präfix aus der Nachricht entfernen: [[prefix]])",
+          "fr": "Planifier l'événement [[message]] le [[date]] à [[time]] et utiliser la catégorie [[category]] (optionnellement supprimer un préfixe du message : [[prefix]])",
+          "it": "Pianifica l'evento [[message]] il [[date]] alle [[time]] e usa la categoria [[category]] (opzionalmente rimuovere un prefisso dal messaggio: [[prefix]])",
+          "sv": "Schemalägg händelsen [[message]] den [[date]] klockan [[time]] och använd kategorin [[category]] (valfritt ta bort ett prefix från meddelandet: [[prefix]])",
+          "no": "Planlegg hendelsen [[message]] den [[date]] klokken [[time]] og bruk kategorien [[category]] (valgfritt fjern et prefiks fra meldingen: [[prefix]])",
+          "es": "Programar el evento [[message]] el [[date]] a las [[time]] y usar la categoría [[category]] (opcionalmente eliminar un prefijo del mensaje: [[prefix]])",
+          "da": "Planlæg begivenheden [[message]] den [[date]] klokken [[time]] og brug kategorien [[category]] (valgfrit fjern et præfiks fra beskeden: [[prefix]])",
+          "ru": "Запланировать событие [[message]] на [[date]] в [[time]] и использовать категорию [[category]] (опционально удалить префикс из сообщения: [[prefix]])",
+          "pl": "Zaplanuj wydarzenie [[message]] na [[date]] o [[time]] i użyj kategorii [[category]] (opcjonalnie usuń prefiks z wiadomości: [[prefix]])",
+          "ko": "이벤트 [[message]]를 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요 (선택적으로 메시지에서 접두사를 제거: [[prefix]])"
         },
         "hint": {
           "en": "This action allows you to schedule an event with a specific message at a given date and time. This card doesnt contain a recipient, so it can be used with apps that handle the message themselves.",
@@ -685,6 +685,25 @@
               "ko": "카테고리"
             },
             "value": "None"
+          },
+          {
+            "type": "text",
+            "name": "prefix",
+            "required": false,
+            "title": {
+              "en": "Prefix to remove from the raw data",
+              "nl": "Prefix om te verwijderen van de ruwe gegevens",
+              "de": "Präfix zum Entfernen der Rohdaten",
+              "fr": "Préfixe à supprimer des données brutes",
+              "it": "Prefisso da rimuovere dai dati grezzi",
+              "sv": "Prefix att ta bort från rådata",
+              "no": "Prefiks å fjerne fra rådata",
+              "es": "Prefijo a eliminar de los datos sin procesar",
+              "da": "Præfiks at fjerne fra rådata",
+              "ru": "Префикс для удаления из исходных данных",
+              "pl": "Prefiks do usunięcia z danych surowych",
+              "ko": "원시 데이터에서 제거할 접두사"
+            }
           }
         ],
         "id": "set_scheduled_event"
@@ -705,18 +724,18 @@
           "ko": "메시지 예약"
         },
         "titleFormatted": {
-          "en": "Schedule Message [[message]] to [[recipient]] on [[date]] at [[time]] and use category [[category]]",
-          "nl": "Plan Bericht [[message]] naar [[recipient]] op [[date]] om [[time]] en gebruik categorie [[category]]",
-          "de": "Nachricht planen [[message]] an [[recipient]] am [[date]] um [[time]] und verwende Kategorie [[category]]",
-          "fr": "Planifier le message [[message]] à [[recipient]] le [[date]] à [[time]] et utiliser la catégorie [[category]]",
-          "it": "Pianifica il messaggio [[message]] a [[recipient]] il [[date]] alle [[time]] e usa la categoria [[category]]",
-          "sv": "Schemalägg meddelandet [[message]] till [[recipient]] den [[date]] klockan [[time]] och använd kategorin [[category]]",
-          "no": "Planlegg meldingen [[message]] til [[recipient]] den [[date]] klokken [[time]] og bruk kategorien [[category]]",
-          "es": "Programar el mensaje [[message]] a [[recipient]] el [[date]] a las [[time]] y usar la categoría [[category]]",
-          "da": "Planlæg beskeden [[message]] til [[recipient]] den [[date]] klokken [[time]] og brug kategorien [[category]]",
-          "ru": "Запланировать сообщение [[message]] для [[recipient]] на [[date]] в [[time]] и использовать категорию [[category]]",
-          "pl": "Zaplanuj wiadomość [[message]] do [[recipient]] na [[date]] o [[time]] i użyj kategorii [[category]]",
-          "ko": "메시지 [[message]]를 [[recipient]]에게 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요"
+          "en": "Schedule Message [[message]] to [[recipient]] on [[date]] at [[time]] and use category [[category]] (optional remove a prefix from the message: [[prefix]])",
+          "nl": "Plan Bericht [[message]] naar [[recipient]] op [[date]] om [[time]] en gebruik categorie [[category]] (optioneel een voorvoegsel uit het bericht verwijderen: [[prefix]])",
+          "de": "Nachricht planen [[message]] an [[recipient]] am [[date]] um [[time]] und verwende Kategorie [[category]] (optional ein Präfix aus der Nachricht entfernen: [[prefix]])",
+          "fr": "Planifier le message [[message]] à [[recipient]] le [[date]] à [[time]] et utiliser la catégorie [[category]] (optionnellement supprimer un préfixe du message : [[prefix]])",
+          "it": "Pianifica il messaggio [[message]] a [[recipient]] il [[date]] alle [[time]] e usa la categoria [[category]] (opzionalmente rimuovere un prefisso dal messaggio: [[prefix]])",
+          "sv": "Schemalägg meddelandet [[message]] till [[recipient]] den [[date]] klockan [[time]] och använd kategorin [[category]] (valfritt ta bort ett prefix från meddelandet: [[prefix]])",
+          "no": "Planlegg meldingen [[message]] til [[recipient]] den [[date]] klokken [[time]] og bruk kategorien [[category]] (valgfritt fjern et prefiks fra meldingen: [[prefix]])",
+          "es": "Programar el mensaje [[message]] a [[recipient]] el [[date]] a las [[time]] y usar la categoría [[category]] (opcionalmente eliminar un prefijo del mensaje: [[prefix]])",
+          "da": "Planlæg beskeden [[message]] til [[recipient]] den [[date]] klokken [[time]] og brug kategorien [[category]] (valgfrit fjern et præfiks fra beskeden: [[prefix]])",
+          "ru": "Запланировать сообщение [[message]] для [[recipient]] на [[date]] в [[time]] и использовать категорию [[category]] (опционально удалить префикс из сообщения: [[prefix]])",
+          "pl": "Zaplanuj wiadomość [[message]] do [[recipient]] na [[date]] o [[time]] i użyj kategorii [[category]] (opcjonalnie usuń prefiks z wiadomości: [[prefix]])",
+          "ko": "메시지 [[message]]를 [[recipient]]에게 [[date]]에 [[time]]에 예약하고 카테고리 [[category]]를 사용하세요 (선택적으로 메시지에서 접두사를 제거: [[prefix]])"
         },
         "hint": {
           "en": "This action allows you to schedule an event with a specific message at a given date and time to a spefici receipient",
@@ -831,6 +850,25 @@
               "ko": "카테고리"
             },
             "value": "None"
+          },
+          {
+            "type": "text",
+            "name": "prefix",
+            "required": false,
+            "title": {
+              "en": "Prefix to remove from the raw data",
+              "nl": "Prefix om te verwijderen van de ruwe gegevens",
+              "de": "Präfix zum Entfernen der Rohdaten",
+              "fr": "Préfixe à supprimer des données brutes",
+              "it": "Prefisso da rimuovere dai dati grezzi",
+              "sv": "Prefix att ta bort från rådata",
+              "no": "Prefiks å fjerne fra rådata",
+              "es": "Prefijo a eliminar de los datos sin procesar",
+              "da": "Præfiks at fjerne fra rådata",
+              "ru": "Префикс для удаления из исходных данных",
+              "pl": "Prefiks do usunięcia z danych surowych",
+              "ko": "원시 데이터에서 제거할 접두사"
+            }
           }
         ],
         "id": "set_scheduled_message"
@@ -918,8 +956,7 @@
               "ru": "Префикс для удаления из исходных данных",
               "pl": "Prefiks do usunięcia z danych surowych",
               "ko": "원시 데이터에서 제거할 접두사"
-            },
-            "value": "##"
+            }
           },
           {
             "type": "text",
@@ -938,8 +975,7 @@
               "ru": "Категория",
               "pl": "Kategoria",
               "ko": "카테고리"
-            },
-            "value": "None"
+            }
           }
         ],
         "id": "set_scheduled_message_raw"
