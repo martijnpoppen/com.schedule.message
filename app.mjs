@@ -10,6 +10,17 @@ import { v4 as uuidv4, validate as isValidUUID } from 'uuid';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const WEEKDAYS = {
+    1: ['1', 'mon', 'monday', 'ma', 'maandag'],
+    2: ['2', 'tue', 'tues', 'tuesday', 'di', 'dinsdag'],
+    3: ['3', 'wed', 'wednesday', 'wo', 'woensdag'],
+    4: ['4', 'thu', 'thur', 'thurs', 'thursday', 'do', 'donderdag'],
+    5: ['5', 'fri', 'friday', 'vr', 'vrijdag'],
+    6: ['6', 'sat', 'saturday', 'za', 'zaterdag'],
+    7: ['7', 'sun', 'sunday', 'zo', 'zondag']
+};
+const REPEAT_TYPES = ['once', 'daily', 'weekly', 'biweekly'];
+
 class ScheduleMessageApp extends HomeyLogger {
     /**
      * Called when the app is initialized.
@@ -57,10 +68,11 @@ class ScheduleMessageApp extends HomeyLogger {
 
             this.queue = [];
 
-            writeFileSync(persistentPath, JSON.stringify(this.queue, null, 2));
+            this.writeQueue(persistentPath);
         } else if (load) {
             this.queue = JSON.parse(readFileSync(persistentPath));
             this.checkQueueForUniqueIds();
+            this.hydrateQueue();
 
             this.log('Queue loaded successfully:', this.queue);
         } else if (!load && categoryOrItemId) {
@@ -75,14 +87,41 @@ class ScheduleMessageApp extends HomeyLogger {
                 this.queue = categoryOrItemId !== '' ? this.queue.filter((job) => job.category !== categoryOrItemId) : [];
             }
 
-            writeFileSync(persistentPath, JSON.stringify(this.queue, null, 2));
+            this.writeQueue(persistentPath);
         } else {
             this.log('Persisting queue to file...');
 
-            writeFileSync(persistentPath, JSON.stringify(this.queue, null, 2));
+            this.writeQueue(persistentPath);
         }
 
         return this.queue;
+    }
+
+    /**
+     * Writes the queue to disk and notifies listeners (settings page / widget) that it changed.
+     * @param {string} persistentPath - The path of the queue file.
+     */
+    writeQueue(persistentPath) {
+        writeFileSync(persistentPath, JSON.stringify(this.queue, null, 2));
+        Promise.resolve()
+            .then(() => this.homey.api.realtime('queue-updated', null))
+            .catch((error) => this.error('Error emitting queue update:', error));
+    }
+
+    /**
+     * Converts the persisted ISO strings back into Luxon DateTime objects,
+     * otherwise loaded jobs can't be compared against the current time.
+     */
+    hydrateQueue() {
+        const timeZone = this.homey.clock.getTimezone();
+
+        this.queue = this.queue
+            .map((job) => ({ ...job, scheduledDateTime: DateTime.fromISO(job.scheduledDateTime, { zone: timeZone }) }))
+            .filter((job) => {
+                if (!job.scheduledDateTime.isValid) this.warn('[hydrateQueue]', 'Removing job with invalid date:', job);
+                return job.scheduledDateTime.isValid;
+            })
+            .sort((a, b) => a.scheduledDateTime - b.scheduledDateTime);
     }
 
     checkQueueForUniqueIds() {
@@ -102,26 +141,31 @@ class ScheduleMessageApp extends HomeyLogger {
      */
     processQueue() {
         this.log('Starting to process the queue every second', this.queue.length);
-        setInterval(() => {
+        this.homey.setInterval(() => {
             const now = DateTime.local({ zone: this.homey.clock.getTimezone() });
 
-            let changed = false;
+            const dueJobs = this.queue.filter((job) => job.scheduledDateTime <= now);
+            if (!dueJobs.length) return;
 
-            // loop through the queue and process jobs check if the datetime is in the past
-            for (let i = 0; i < this.queue.length; i++) {
-                const job = this.queue[i];
-                if (job.scheduledDateTime <= now) {
-                    this.info('⏰ Running job:', job.message, 'recipient:', job.recipient, 'category:', job.category, 'at', job.scheduledDateTime.toISO());
+            for (const job of dueJobs) {
+                this.info('⏰ Running job:', job.message, 'recipient:', job.recipient, 'category:', job.category, 'at', job.scheduledDateTime.toISO());
 
-                    const tokensAndState = { recipient: job.recipient, message: job.message, category: job.category };
-                    this.triggers.scheduled_message_trigger.trigger(tokensAndState, tokensAndState);
+                const tokensAndState = { recipient: job.recipient, message: job.message, category: job.category };
+                this.triggers.scheduled_message_trigger.trigger(tokensAndState, tokensAndState).catch((error) => this.error('Error triggering flow:', error));
 
-                    this.queue.splice(i, 1);
-                    changed = true;
+                // Recurring jobs stay in the queue with their next occurrence, one-off jobs are removed
+                const nextDateTime = job.recurrence ? this.getNextOccurrence(job.recurrence, now) : null;
+
+                if (nextDateTime) {
+                    this.log('Rescheduling recurring job', job.id, 'to', nextDateTime.toISO());
+                    job.scheduledDateTime = nextDateTime;
+                } else {
+                    this.queue = this.queue.filter((queuedJob) => queuedJob !== job);
                 }
             }
 
-            if (changed) this.persistOrLoadQueue(false);
+            this.queue.sort((a, b) => a.scheduledDateTime - b.scheduledDateTime);
+            this.persistOrLoadQueue(false);
         }, 1000);
     }
 
@@ -197,6 +241,15 @@ class ScheduleMessageApp extends HomeyLogger {
             }
         });
 
+        const set_recurring_message = this.homey.flow.getActionCard('set_recurring_message');
+        set_recurring_message.registerRunListener(async (args, state) => {
+            this.trace('[Action]', 'set_recurring_message', args);
+
+            const { time, repeat, days, message, recipient, category } = args;
+
+            this.runRecurringAction(time, repeat, days, message, category, recipient);
+        });
+
         const reset_scheduled_messages = this.homey.flow.getActionCard('reset_scheduled_messages');
         reset_scheduled_messages.registerRunListener(async (args, state) => {
             this.trace('[Action]', 'reset_scheduled_messages');
@@ -227,6 +280,125 @@ class ScheduleMessageApp extends HomeyLogger {
             this.error('Error in runAction:', error);
             throw error;
         }
+    }
+
+    /**
+     * Schedules a message on a time with an optional repeat pattern.
+     * @param {string} time - Time in HH:mm.
+     * @param {string} repeat - One of once, daily, weekly, biweekly.
+     * @param {string|Array} days - Days to run on, e.g. "mon,wed,fri", "1,3,5", "weekdays" or an array of ISO weekdays.
+     * @param {string} message - The message.
+     * @param {string} category - The category.
+     * @param {string} recipient - The recipient.
+     * @param {string|null} startDate - Optional date from which the schedule starts.
+     */
+    runRecurringAction(time, repeat = 'once', days = '', message, category = 'None', recipient = '', startDate = null) {
+        try {
+            if (!REPEAT_TYPES.includes(repeat)) {
+                throw new Error(`Invalid repeat value "${repeat}". Use one of: ${REPEAT_TYPES.join(', ')}`);
+            }
+
+            if (!/^\d{1,2}:\d{2}/.test(time || '')) {
+                throw new Error('Invalid time format. Please provide a time as HH:mm.');
+            }
+
+            const timeZone = this.homey.clock.getTimezone();
+            const now = DateTime.local({ zone: timeZone });
+            const from = startDate ? DateTime.max(now, DateTime.fromISO(this.formatDateToIso(startDate), { zone: timeZone }).minus({ milliseconds: 1 })) : now;
+            const recurrence = { repeat, time: time.slice(0, 5), days: this.parseDays(days) };
+
+            // Find the first occurrence, and use its weekday / week as base when no days are given
+            const scheduledDateTime = this.getNextOccurrence(recurrence, from);
+            if (!scheduledDateTime) {
+                throw new Error('Could not determine the next occurrence for this schedule.');
+            }
+
+            if (!recurrence.days.length && (repeat === 'weekly' || repeat === 'biweekly')) {
+                recurrence.days = [scheduledDateTime.weekday];
+            }
+
+            if (repeat === 'biweekly') {
+                recurrence.anchor = scheduledDateTime.startOf('week').toISODate();
+            }
+
+            const job = {
+                id: uuidv4(),
+                recipient: recipient || 'Unknown recipient',
+                message,
+                scheduledDateTime,
+                category: category || 'None'
+            };
+
+            if (repeat !== 'once') job.recurrence = recurrence;
+
+            this.log('runRecurringAction', job);
+
+            this.queue.push(job);
+            this.queue.sort((a, b) => a.scheduledDateTime - b.scheduledDateTime); // Keep sorted
+            this.persistOrLoadQueue(false);
+
+            return job;
+        } catch (error) {
+            this.error('Error in runRecurringAction:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Parses a days string (e.g. "mon,wed,fri", "1 3 5", "weekdays", "weekend") into ISO weekdays (1 = Monday).
+     * @param {string|Array} input
+     * @returns {number[]}
+     */
+    parseDays(input) {
+        if (Array.isArray(input)) input = input.join(',');
+        if (!input || !String(input).trim()) return [];
+
+        const days = new Set();
+
+        for (const token of String(input).toLowerCase().split(/[\s,;|]+/).filter(Boolean)) {
+            if (['weekdays', 'workdays', 'werkdagen', 'doordeweeks'].includes(token)) {
+                [1, 2, 3, 4, 5].forEach((day) => days.add(day));
+            } else if (['weekend', 'weekends'].includes(token)) {
+                [6, 7].forEach((day) => days.add(day));
+            } else {
+                const day = Object.keys(WEEKDAYS).find((key) => WEEKDAYS[key].includes(token));
+                if (!day) throw new Error(`Invalid day "${token}". Use e.g. mon,tue,wed,thu,fri,sat,sun or 1-7 (1 = Monday).`);
+                days.add(Number(day));
+            }
+        }
+
+        return [...days].sort();
+    }
+
+    /**
+     * Calculates the next occurrence of a recurrence after a given moment.
+     * @param {{repeat: string, time: string, days: number[], anchor?: string}} recurrence
+     * @param {DateTime} after
+     * @returns {DateTime|null}
+     */
+    getNextOccurrence({ repeat, time, days = [], anchor }, after) {
+        const timeZone = this.homey.clock.getTimezone();
+        const [hour, minute] = time.split(':').map(Number);
+        const anchorWeek = anchor ? DateTime.fromISO(anchor, { zone: timeZone }).startOf('week') : null;
+
+        let day = after.setZone(timeZone).startOf('day');
+
+        // 3 weeks is always enough to find the next day for a (bi)weekly schedule
+        for (let i = 0; i <= 21; i++, day = day.plus({ days: 1 })) {
+            const candidate = day.set({ hour, minute, second: 0, millisecond: 0 });
+
+            if (candidate <= after) continue;
+            if (days.length && !days.includes(candidate.weekday)) continue;
+
+            if (repeat === 'biweekly' && anchorWeek) {
+                const weeks = Math.round(candidate.startOf('week').diff(anchorWeek, 'weeks').weeks);
+                if (Math.abs(weeks) % 2 !== 0) continue;
+            }
+
+            return candidate;
+        }
+
+        return null;
     }
 
     formatDateToIso(input) {

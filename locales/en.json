@@ -2,5 +2,16 @@
     "settings": {
         "overview": "Scheduled messages",
         "new": "New scheduled message"
+    },
+    "widget": {
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "empty": "No messages scheduled",
+        "more": "+ __count__ more",
+        "repeat": {
+            "daily": "Daily",
+            "weekly": "Weekly",
+            "biweekly": "Every 2 weeks"
+        }
     }
 }

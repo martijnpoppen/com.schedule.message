@@ -1,0 +1,17 @@
+{
+    "settings": {
+        "overview": "Geplande berichten",
+        "new": "Nieuw gepland bericht"
+    },
+    "widget": {
+        "today": "Vandaag",
+        "tomorrow": "Morgen",
+        "empty": "Geen berichten gepland",
+        "more": "+ nog __count__",
+        "repeat": {
+            "daily": "Dagelijks",
+            "weekly": "Wekelijks",
+            "biweekly": "Elke 2 weken"
+        }
+    }
+}

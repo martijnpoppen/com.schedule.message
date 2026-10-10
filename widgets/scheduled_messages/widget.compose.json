@@ -1,0 +1,65 @@
+{
+  "name": {
+    "en": "Scheduled messages",
+    "nl": "Geplande berichten",
+    "de": "Geplante Nachrichten",
+    "fr": "Messages planifiés",
+    "it": "Messaggi pianificati",
+    "sv": "Schemalagda meddelanden",
+    "no": "Planlagte meldinger",
+    "es": "Mensajes programados",
+    "da": "Planlagte beskeder",
+    "ru": "Запланированные сообщения",
+    "pl": "Zaplanowane wiadomości",
+    "ko": "예약된 메시지"
+  },
+  "height": 220,
+  "settings": [
+    {
+      "id": "maxItems",
+      "type": "number",
+      "title": {
+        "en": "Number of messages",
+        "nl": "Aantal berichten",
+        "de": "Anzahl der Nachrichten",
+        "fr": "Nombre de messages",
+        "it": "Numero di messaggi",
+        "sv": "Antal meddelanden",
+        "no": "Antall meldinger",
+        "es": "Número de mensajes",
+        "da": "Antal beskeder",
+        "ru": "Количество сообщений",
+        "pl": "Liczba wiadomości",
+        "ko": "메시지 수"
+      },
+      "value": 5,
+      "min": 1,
+      "max": 25
+    },
+    {
+      "id": "category",
+      "type": "text",
+      "title": {
+        "en": "Category (leave empty for all)",
+        "nl": "Categorie (laat leeg voor alle)",
+        "de": "Kategorie (leer lassen für alle)",
+        "fr": "Catégorie (laisser vide pour tout)",
+        "it": "Categoria (lascia vuoto per tutte)",
+        "sv": "Kategori (lämna tom för alla)",
+        "no": "Kategori (la stå tom for alle)",
+        "es": "Categoría (dejar vacío para todos)",
+        "da": "Kategori (lad være tom for alle)",
+        "ru": "Категория (оставьте пустым для всех)",
+        "pl": "Kategoria (pozostaw puste dla wszystkich)",
+        "ko": "카테고리 (모두에 대해 비워 두기)"
+      },
+      "value": ""
+    }
+  ],
+  "api": {
+    "getMessages": {
+      "method": "GET",
+      "path": "/"
+    }
+  }
+}
