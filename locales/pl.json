@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Zaplanowane wiadomości",
+        "new": "Nowa zaplanowana wiadomość",
+        "tabOverview": "Przegląd",
+        "tabNew": "Dodaj wiadomość",
+        "allCategories": "Wszystkie kategorie",
+        "filterCategory": "Kategoria",
+        "removeRecurring": "Usuń cykliczne",
+        "removeAll": "Usuń wszystkie",
+        "confirmRemoveRecurring": "Usunąć wszystkie cykliczne wiadomości__category__? Jednorazowe wiadomości pozostaną.",
+        "confirmRemoveAll": "Usunąć wszystkie zaplanowane wiadomości__category__?",
+        "inCategory": " w kategorii \"__category__\"",
+        "empty": "Brak zaplanowanych wiadomości.",
+        "summary": "Zaplanowane: __count__, cykliczne: __recurring__",
+        "upcoming": "Nadchodzące",
+        "skipHint": "Dotknij godziny, aby pominąć tylko tę.",
+        "confirmSkip": "Pominąć wiadomość z __date__? Pozostałe powtórzenia zostaną zachowane.",
+        "confirmDelete": "Usunąć tę wiadomość?",
+        "confirmDeleteRecurring": "Usunąć tę cykliczną wiadomość i wszystkie jej powtórzenia?",
+        "message": "Wiadomość",
+        "recipient": "Odbiorca (opcjonalnie)",
+        "category": "Kategoria",
+        "repeat": "Powtarzaj",
+        "dateTime": "Data i godzina",
+        "time": "Godzina",
+        "startDate": "Data rozpoczęcia (opcjonalnie)",
+        "days": "Dni",
+        "daysHint": "Nie wybrano dni: codziennie działa każdego dnia, co tydzień w dniu tygodnia pierwszego wysłania.",
+        "repeatNone": "Nie powtarzaj",
+        "preview": "Zostanie wysłana",
+        "save": "Zaplanuj wiadomość",
+        "saved": "Wiadomość zaplanowana",
+        "required": "Wpisz wiadomość i godzinę."
+    },
+    "widget": {
+        "today": "Dziś",
+        "tomorrow": "Jutro",
+        "empty": "Brak zaplanowanych wiadomości",
+        "repeat": {
+            "daily": "Codziennie",
+            "weekly": "Co tydzień",
+            "biweekly": "Co 2 tygodnie"
+        },
+        "labels": {
+            "scheduled": "Zaplanowano",
+            "repeat": "Powtarzaj",
+            "recipient": "Odbiorca",
+            "category": "Kategoria",
+            "delete": "Usuń",
+            "deleteRecurring": "Usuń wszystkie powtórzenia",
+            "confirmDelete": "Dotknij ponownie, aby usunąć",
+            "close": "Zamknij",
+            "skip": "Pomiń tę",
+            "confirmSkip": "Dotknij ponownie, aby pominąć"
+        }
+    }
+}

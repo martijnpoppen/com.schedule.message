@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "예약된 메시지",
+        "new": "새 예약 메시지",
+        "tabOverview": "개요",
+        "tabNew": "메시지 추가",
+        "allCategories": "모든 카테고리",
+        "filterCategory": "카테고리",
+        "removeRecurring": "반복 메시지 제거",
+        "removeAll": "모두 제거",
+        "confirmRemoveRecurring": "__category__모든 반복 메시지를 제거할까요? 한 번만 보내는 메시지는 유지됩니다.",
+        "confirmRemoveAll": "__category__모든 예약 메시지를 제거할까요?",
+        "inCategory": "카테고리 \"__category__\"의 ",
+        "empty": "예약된 메시지가 없습니다.",
+        "summary": "예약 __count__개, 반복 __recurring__개",
+        "upcoming": "예정",
+        "skipHint": "시간을 탭하면 그 시간만 건너뜁니다.",
+        "confirmSkip": "__date__ 메시지를 건너뛸까요? 다른 반복은 유지됩니다.",
+        "confirmDelete": "이 메시지를 삭제할까요?",
+        "confirmDeleteRecurring": "이 반복 메시지와 모든 반복을 삭제할까요?",
+        "message": "메시지",
+        "recipient": "수신자 (선택 사항)",
+        "category": "카테고리",
+        "repeat": "반복",
+        "dateTime": "날짜 및 시간",
+        "time": "시간",
+        "startDate": "시작 날짜 (선택 사항)",
+        "days": "요일",
+        "daysHint": "선택한 요일이 없으면 매일은 매일 실행되고, 매주는 첫 전송 요일에 실행됩니다.",
+        "repeatNone": "반복 안 함",
+        "preview": "전송 예정",
+        "save": "메시지 예약",
+        "saved": "메시지가 예약되었습니다",
+        "required": "메시지와 시간을 입력하세요."
+    },
+    "widget": {
+        "today": "오늘",
+        "tomorrow": "내일",
+        "empty": "예약된 메시지가 없습니다",
+        "repeat": {
+            "daily": "매일",
+            "weekly": "매주",
+            "biweekly": "2주마다"
+        },
+        "labels": {
+            "scheduled": "예약됨",
+            "repeat": "반복",
+            "recipient": "수신자",
+            "category": "카테고리",
+            "delete": "삭제",
+            "deleteRecurring": "모든 반복 삭제",
+            "confirmDelete": "다시 탭하여 삭제",
+            "close": "닫기",
+            "skip": "이번만 건너뛰기",
+            "confirmSkip": "다시 탭하여 건너뛰기"
+        }
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Planlagte meldinger",
+        "new": "Ny planlagt melding",
+        "tabOverview": "Oversikt",
+        "tabNew": "Legg til melding",
+        "allCategories": "Alle kategorier",
+        "filterCategory": "Kategori",
+        "removeRecurring": "Fjern gjentakende",
+        "removeAll": "Fjern alle",
+        "confirmRemoveRecurring": "Fjerne alle gjentakende meldinger__category__? Engangsmeldinger beholdes.",
+        "confirmRemoveAll": "Fjerne alle planlagte meldinger__category__?",
+        "inCategory": " i kategorien \"__category__\"",
+        "empty": "Ingen meldinger planlagt.",
+        "summary": "__count__ planlagt, __recurring__ gjentakende",
+        "upcoming": "Kommende",
+        "skipHint": "Trykk på et tidspunkt for å hoppe over bare det.",
+        "confirmSkip": "Hoppe over meldingen __date__? De andre gjentakelsene beholdes.",
+        "confirmDelete": "Slette denne meldingen?",
+        "confirmDeleteRecurring": "Slette denne gjentakende meldingen og alle gjentakelsene?",
+        "message": "Melding",
+        "recipient": "Mottaker (valgfritt)",
+        "category": "Kategori",
+        "repeat": "Gjenta",
+        "dateTime": "Dato og tid",
+        "time": "Tid",
+        "startDate": "Startdato (valgfritt)",
+        "days": "Dager",
+        "daysHint": "Ingen dager valgt: daglig kjører hver dag, ukentlig på ukedagen for første sending.",
+        "repeatNone": "Ikke gjenta",
+        "preview": "Sendes",
+        "save": "Planlegg melding",
+        "saved": "Melding planlagt",
+        "required": "Fyll inn meldingen og tidspunktet."
+    },
+    "widget": {
+        "today": "I dag",
+        "tomorrow": "I morgen",
+        "empty": "Ingen meldinger planlagt",
+        "repeat": {
+            "daily": "Daglig",
+            "weekly": "Ukentlig",
+            "biweekly": "Annenhver uke"
+        },
+        "labels": {
+            "scheduled": "Planlagt",
+            "repeat": "Gjenta",
+            "recipient": "Mottaker",
+            "category": "Kategori",
+            "delete": "Slett",
+            "deleteRecurring": "Slett alle gjentakelser",
+            "confirmDelete": "Trykk igjen for å slette",
+            "close": "Lukk",
+            "skip": "Hopp over denne",
+            "confirmSkip": "Trykk igjen for å hoppe over"
+        }
+    }
+}
