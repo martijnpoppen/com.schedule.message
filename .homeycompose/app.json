@@ -48,6 +48,26 @@
     "SetQueue": {
       "method": "POST",
       "path": "/queue"
+    },
+    "GetMessages": {
+      "method": "GET",
+      "path": "/messages"
+    },
+    "PreviewMessage": {
+      "method": "GET",
+      "path": "/messages/preview"
+    },
+    "SkipMessage": {
+      "method": "POST",
+      "path": "/messages/:id/skip"
+    },
+    "DeleteMessage": {
+      "method": "DELETE",
+      "path": "/messages/:id"
+    },
+    "RemoveMessages": {
+      "method": "DELETE",
+      "path": "/messages"
     }
   },
   "category": [

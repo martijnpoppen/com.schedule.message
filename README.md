@@ -4,6 +4,7 @@ Features:
 - Schedule messages to be sent at a specific date and time.
 - Schedule recurring messages on a time: once, daily, weekly or every 2 weeks, optionally on specific days.
 - Dashboard widget showing the upcoming scheduled messages. Tap a message to see all its details or delete it.
+- Settings page to add messages (with a preview of when they'll be sent) and manage them: see upcoming repeats, skip a single repeat, filter by category and remove messages in bulk.
 - Supports categories for organizing or filtering scheduled messages.
 - Compatible with other Homey apps that can process messages (e.g. Telegram, WhatsApp, Signal, Slack).
 - Optionally specify a recipient for each message.
