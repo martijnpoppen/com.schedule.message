@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Planlagte beskeder",
+        "new": "Ny planlagt besked",
+        "tabOverview": "Oversigt",
+        "tabNew": "Tilføj besked",
+        "allCategories": "Alle kategorier",
+        "filterCategory": "Kategori",
+        "removeRecurring": "Fjern tilbagevendende",
+        "removeAll": "Fjern alle",
+        "confirmRemoveRecurring": "Fjern alle tilbagevendende beskeder__category__? Engangsbeskeder bevares.",
+        "confirmRemoveAll": "Fjern alle planlagte beskeder__category__?",
+        "inCategory": " i kategorien \"__category__\"",
+        "empty": "Ingen beskeder planlagt.",
+        "summary": "__count__ planlagt, __recurring__ tilbagevendende",
+        "upcoming": "Kommende",
+        "skipHint": "Tryk på et tidspunkt for kun at springe det over.",
+        "confirmSkip": "Spring beskeden den __date__ over? De andre gentagelser bevares.",
+        "confirmDelete": "Slet denne besked?",
+        "confirmDeleteRecurring": "Slet denne tilbagevendende besked og alle gentagelser?",
+        "message": "Besked",
+        "recipient": "Modtager (valgfrit)",
+        "category": "Kategori",
+        "repeat": "Gentag",
+        "dateTime": "Dato og tid",
+        "time": "Tid",
+        "startDate": "Startdato (valgfrit)",
+        "days": "Dage",
+        "daysHint": "Ingen dage valgt: dagligt kører hver dag, ugentligt på ugedagen for første afsendelse.",
+        "repeatNone": "Gentag ikke",
+        "preview": "Sendes",
+        "save": "Planlæg besked",
+        "saved": "Besked planlagt",
+        "required": "Udfyld beskeden og tidspunktet."
+    },
+    "widget": {
+        "today": "I dag",
+        "tomorrow": "I morgen",
+        "empty": "Ingen beskeder planlagt",
+        "repeat": {
+            "daily": "Dagligt",
+            "weekly": "Ugentligt",
+            "biweekly": "Hver 2. uge"
+        },
+        "labels": {
+            "scheduled": "Planlagt",
+            "repeat": "Gentag",
+            "recipient": "Modtager",
+            "category": "Kategori",
+            "delete": "Slet",
+            "deleteRecurring": "Slet alle gentagelser",
+            "confirmDelete": "Tryk igen for at slette",
+            "close": "Luk",
+            "skip": "Spring denne over",
+            "confirmSkip": "Tryk igen for at springe over"
+        }
+    }
+}

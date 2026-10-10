@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Mensajes programados",
+        "new": "Nuevo mensaje programado",
+        "tabOverview": "Resumen",
+        "tabNew": "Añadir mensaje",
+        "allCategories": "Todas las categorías",
+        "filterCategory": "Categoría",
+        "removeRecurring": "Eliminar recurrentes",
+        "removeAll": "Eliminar todo",
+        "confirmRemoveRecurring": "¿Eliminar todos los mensajes recurrentes__category__? Los mensajes únicos se mantienen.",
+        "confirmRemoveAll": "¿Eliminar todos los mensajes programados__category__?",
+        "inCategory": " de la categoría \"__category__\"",
+        "empty": "No hay mensajes programados.",
+        "summary": "__count__ programados, __recurring__ recurrentes",
+        "upcoming": "Próximos",
+        "skipHint": "Toca una hora para omitir solo esa.",
+        "confirmSkip": "¿Omitir el mensaje del __date__? Las demás repeticiones se mantienen.",
+        "confirmDelete": "¿Eliminar este mensaje?",
+        "confirmDeleteRecurring": "¿Eliminar este mensaje recurrente y todas sus repeticiones?",
+        "message": "Mensaje",
+        "recipient": "Destinatario (opcional)",
+        "category": "Categoría",
+        "repeat": "Repetir",
+        "dateTime": "Fecha y hora",
+        "time": "Hora",
+        "startDate": "Fecha de inicio (opcional)",
+        "days": "Días",
+        "daysHint": "Ningún día seleccionado: diario se ejecuta todos los días, semanal el día del primer envío.",
+        "repeatNone": "No repetir",
+        "preview": "Se enviará",
+        "save": "Programar mensaje",
+        "saved": "Mensaje programado",
+        "required": "Introduce el mensaje y la hora."
+    },
+    "widget": {
+        "today": "Hoy",
+        "tomorrow": "Mañana",
+        "empty": "No hay mensajes programados",
+        "repeat": {
+            "daily": "Diario",
+            "weekly": "Semanal",
+            "biweekly": "Cada 2 semanas"
+        },
+        "labels": {
+            "scheduled": "Programado",
+            "repeat": "Repetir",
+            "recipient": "Destinatario",
+            "category": "Categoría",
+            "delete": "Eliminar",
+            "deleteRecurring": "Eliminar todas las repeticiones",
+            "confirmDelete": "Toca de nuevo para eliminar",
+            "close": "Cerrar",
+            "skip": "Omitir este",
+            "confirmSkip": "Toca de nuevo para omitir"
+        }
+    }
+}

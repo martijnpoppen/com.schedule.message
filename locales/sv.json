@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Schemalagda meddelanden",
+        "new": "Nytt schemalagt meddelande",
+        "tabOverview": "Översikt",
+        "tabNew": "Lägg till meddelande",
+        "allCategories": "Alla kategorier",
+        "filterCategory": "Kategori",
+        "removeRecurring": "Ta bort återkommande",
+        "removeAll": "Ta bort alla",
+        "confirmRemoveRecurring": "Ta bort alla återkommande meddelanden__category__? Engångsmeddelanden behålls.",
+        "confirmRemoveAll": "Ta bort alla schemalagda meddelanden__category__?",
+        "inCategory": " i kategorin \"__category__\"",
+        "empty": "Inga meddelanden schemalagda.",
+        "summary": "__count__ schemalagda, __recurring__ återkommande",
+        "upcoming": "Kommande",
+        "skipHint": "Tryck på en tid för att bara hoppa över den.",
+        "confirmSkip": "Hoppa över meddelandet den __date__? De andra upprepningarna behålls.",
+        "confirmDelete": "Ta bort detta meddelande?",
+        "confirmDeleteRecurring": "Ta bort detta återkommande meddelande och alla upprepningar?",
+        "message": "Meddelande",
+        "recipient": "Mottagare (valfritt)",
+        "category": "Kategori",
+        "repeat": "Upprepa",
+        "dateTime": "Datum och tid",
+        "time": "Tid",
+        "startDate": "Startdatum (valfritt)",
+        "days": "Dagar",
+        "daysHint": "Inga dagar valda: dagligen körs varje dag, veckovis på veckodagen för första utskicket.",
+        "repeatNone": "Upprepa inte",
+        "preview": "Skickas",
+        "save": "Schemalägg meddelande",
+        "saved": "Meddelande schemalagt",
+        "required": "Fyll i meddelandet och tiden."
+    },
+    "widget": {
+        "today": "Idag",
+        "tomorrow": "Imorgon",
+        "empty": "Inga meddelanden schemalagda",
+        "repeat": {
+            "daily": "Dagligen",
+            "weekly": "Veckovis",
+            "biweekly": "Varannan vecka"
+        },
+        "labels": {
+            "scheduled": "Schemalagd",
+            "repeat": "Upprepa",
+            "recipient": "Mottagare",
+            "category": "Kategori",
+            "delete": "Ta bort",
+            "deleteRecurring": "Ta bort alla upprepningar",
+            "confirmDelete": "Tryck igen för att ta bort",
+            "close": "Stäng",
+            "skip": "Hoppa över denna",
+            "confirmSkip": "Tryck igen för att hoppa över"
+        }
+    }
+}

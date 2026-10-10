@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Messages planifiés",
+        "new": "Nouveau message planifié",
+        "tabOverview": "Aperçu",
+        "tabNew": "Ajouter un message",
+        "allCategories": "Toutes les catégories",
+        "filterCategory": "Catégorie",
+        "removeRecurring": "Supprimer les récurrents",
+        "removeAll": "Tout supprimer",
+        "confirmRemoveRecurring": "Supprimer tous les messages récurrents__category__ ? Les messages uniques sont conservés.",
+        "confirmRemoveAll": "Supprimer tous les messages planifiés__category__ ?",
+        "inCategory": " de la catégorie « __category__ »",
+        "empty": "Aucun message planifié.",
+        "summary": "__count__ planifié(s), __recurring__ récurrent(s)",
+        "upcoming": "À venir",
+        "skipHint": "Touchez une heure pour ignorer uniquement celle-ci.",
+        "confirmSkip": "Ignorer le message du __date__ ? Les autres répétitions sont conservées.",
+        "confirmDelete": "Supprimer ce message ?",
+        "confirmDeleteRecurring": "Supprimer ce message récurrent et toutes ses répétitions ?",
+        "message": "Message",
+        "recipient": "Destinataire (facultatif)",
+        "category": "Catégorie",
+        "repeat": "Répéter",
+        "dateTime": "Date et heure",
+        "time": "Heure",
+        "startDate": "Date de début (facultatif)",
+        "days": "Jours",
+        "daysHint": "Aucun jour sélectionné : quotidien s'exécute chaque jour, hebdomadaire le jour du premier envoi.",
+        "repeatNone": "Ne pas répéter",
+        "preview": "Sera envoyé",
+        "save": "Planifier le message",
+        "saved": "Message planifié",
+        "required": "Veuillez saisir le message et l'heure."
+    },
+    "widget": {
+        "today": "Aujourd'hui",
+        "tomorrow": "Demain",
+        "empty": "Aucun message planifié",
+        "repeat": {
+            "daily": "Quotidien",
+            "weekly": "Hebdomadaire",
+            "biweekly": "Toutes les 2 semaines"
+        },
+        "labels": {
+            "scheduled": "Planifié",
+            "repeat": "Répéter",
+            "recipient": "Destinataire",
+            "category": "Catégorie",
+            "delete": "Supprimer",
+            "deleteRecurring": "Supprimer toutes les répétitions",
+            "confirmDelete": "Touchez à nouveau pour supprimer",
+            "close": "Fermer",
+            "skip": "Ignorer celui-ci",
+            "confirmSkip": "Touchez à nouveau pour ignorer"
+        }
+    }
+}

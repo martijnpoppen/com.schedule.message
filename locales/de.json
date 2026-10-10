@@ -1,0 +1,58 @@
+{
+    "settings": {
+        "overview": "Geplante Nachrichten",
+        "new": "Neue geplante Nachricht",
+        "tabOverview": "Übersicht",
+        "tabNew": "Nachricht hinzufügen",
+        "allCategories": "Alle Kategorien",
+        "filterCategory": "Kategorie",
+        "removeRecurring": "Wiederkehrende entfernen",
+        "removeAll": "Alle entfernen",
+        "confirmRemoveRecurring": "Alle wiederkehrenden Nachrichten__category__ entfernen? Einmalige Nachrichten bleiben erhalten.",
+        "confirmRemoveAll": "Alle geplanten Nachrichten__category__ entfernen?",
+        "inCategory": " in Kategorie \"__category__\"",
+        "empty": "Keine Nachrichten geplant.",
+        "summary": "__count__ geplant, __recurring__ wiederkehrend",
+        "upcoming": "Demnächst",
+        "skipHint": "Tippe auf eine Zeit, um nur diese zu überspringen.",
+        "confirmSkip": "Die Nachricht am __date__ überspringen? Die anderen Wiederholungen bleiben erhalten.",
+        "confirmDelete": "Diese Nachricht löschen?",
+        "confirmDeleteRecurring": "Diese wiederkehrende Nachricht und alle Wiederholungen löschen?",
+        "message": "Nachricht",
+        "recipient": "Empfänger (optional)",
+        "category": "Kategorie",
+        "repeat": "Wiederholen",
+        "dateTime": "Datum und Uhrzeit",
+        "time": "Uhrzeit",
+        "startDate": "Startdatum (optional)",
+        "days": "Tage",
+        "daysHint": "Keine Tage ausgewählt: täglich läuft jeden Tag, wöchentlich am Wochentag des ersten Versands.",
+        "repeatNone": "Nicht wiederholen",
+        "preview": "Wird gesendet",
+        "save": "Nachricht planen",
+        "saved": "Nachricht geplant",
+        "required": "Bitte gib die Nachricht und die Uhrzeit ein."
+    },
+    "widget": {
+        "today": "Heute",
+        "tomorrow": "Morgen",
+        "empty": "Keine Nachrichten geplant",
+        "repeat": {
+            "daily": "Täglich",
+            "weekly": "Wöchentlich",
+            "biweekly": "Alle 2 Wochen"
+        },
+        "labels": {
+            "scheduled": "Geplant",
+            "repeat": "Wiederholen",
+            "recipient": "Empfänger",
+            "category": "Kategorie",
+            "delete": "Löschen",
+            "deleteRecurring": "Alle Wiederholungen löschen",
+            "confirmDelete": "Erneut tippen zum Löschen",
+            "close": "Schließen",
+            "skip": "Diese überspringen",
+            "confirmSkip": "Erneut tippen zum Überspringen"
+        }
+    }
+}
