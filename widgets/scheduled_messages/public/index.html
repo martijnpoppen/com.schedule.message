@@ -190,7 +190,7 @@
         const detailElement = document.getElementById('detail');
         let ready = false;
         let result = null;
-        let openId = null;
+        let openKey = null;
         let confirmTimeout = null;
 
         function updateHeight() {
@@ -217,7 +217,7 @@
               const badge = item.repeat ? `<span class="badge">↻ ${escapeHtml(item.repeat)}</span>` : '';
 
               return `
-                <div class="item" data-id="${escapeHtml(item.id)}">
+                <div class="item" data-key="${escapeHtml(item.key)}">
                   <div class="when">
                     <div class="time">${escapeHtml(item.time)}</div>
                     <div class="homey-text-small-light">${escapeHtml(item.day)}</div>
@@ -232,7 +232,7 @@
         }
 
         function renderDetail() {
-          const item = result && result.items.find((listItem) => listItem.id === openId);
+          const item = result && result.items.find((listItem) => listItem.key === openKey);
 
           // The message was sent or removed in the meantime
           if (!item) {
@@ -263,35 +263,37 @@
             </div>
             <div class="detail-message homey-text-regular">${escapeHtml(item.message)}</div>
             <div>${fields}</div>
-            <button class="delete" id="delete">${escapeHtml(labels.delete)}</button>`;
+            <button class="delete" id="delete">${escapeHtml(item.repeat ? labels.deleteRecurring : labels.delete)}</button>`;
 
           document.getElementById('close').addEventListener('click', closeDetail);
-          document.getElementById('delete').addEventListener('click', (event) => onDelete(event.currentTarget, item.id));
+          document.getElementById('delete').addEventListener('click', (event) => onDelete(event.currentTarget, item));
         }
 
-        function openDetail(id) {
-          openId = id;
+        function openDetail(key) {
+          openKey = key;
           document.body.classList.add('show-detail');
           renderDetail();
           updateHeight();
         }
 
         function closeDetail() {
-          openId = null;
+          openKey = null;
           clearTimeout(confirmTimeout);
           document.body.classList.remove('show-detail');
           detailElement.innerHTML = '';
           updateHeight();
         }
 
-        function onDelete(button, id) {
+        function onDelete(button, item) {
+          const deleteLabel = item.repeat ? result.labels.deleteRecurring : result.labels.delete;
+
           // First tap asks for confirmation, second tap deletes
           if (!button.classList.contains('confirm')) {
             button.classList.add('confirm');
             button.textContent = result.labels.confirmDelete;
             confirmTimeout = setTimeout(() => {
               button.classList.remove('confirm');
-              button.textContent = result.labels.delete;
+              button.textContent = deleteLabel;
             }, 3000);
             return;
           }
@@ -299,7 +301,7 @@
           clearTimeout(confirmTimeout);
           button.disabled = true;
 
-          Homey.api('DELETE', `/${encodeURIComponent(id)}`, {})
+          Homey.api('DELETE', `/${encodeURIComponent(item.id)}`, {})
             .then(() => {
               closeDetail();
               load();
@@ -308,19 +310,23 @@
               console.error(error);
               button.disabled = false;
               button.classList.remove('confirm');
-              button.textContent = result.labels.delete;
+              button.textContent = deleteLabel;
             });
         }
 
         function render(data) {
           result = data;
           renderList();
-          if (openId) renderDetail();
+          if (openKey) renderDetail();
           updateHeight();
         }
 
         function load() {
-          const query = new URLSearchParams({ maxItems, category: settings.category || '' });
+          const query = new URLSearchParams({
+            maxItems,
+            category: settings.category || '',
+            expandRecurring: settings.expandRecurring !== false
+          });
 
           Homey.api('GET', `/?${query.toString()}`, {})
             .then(render)
@@ -338,7 +344,7 @@
 
         listElement.addEventListener('click', (event) => {
           const itemElement = event.target.closest('.item');
-          if (itemElement) openDetail(itemElement.dataset.id);
+          if (itemElement) openDetail(itemElement.dataset.key);
         });
 
         // Refresh when a message is added, sent or removed, and periodically to keep "Today" / "Tomorrow" up to date
