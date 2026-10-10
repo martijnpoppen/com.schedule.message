@@ -145,8 +145,38 @@
         word-break: break-word;
       }
 
-      .delete {
+      .actions {
+        display: flex;
+        gap: var(--homey-su-2, 8px);
         margin-top: var(--homey-su-1, 4px);
+      }
+
+      .actions button {
+        flex: 1 1 0;
+      }
+
+      .skip {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        color: inherit;
+        background: var(--homey-line-color-light, rgba(128, 128, 128, 0.2));
+        transition: background 0.15s, color 0.15s;
+      }
+
+      .skip.confirm {
+        color: #fff;
+        background: #8569d8;
+      }
+
+      .skip:disabled {
+        opacity: 0.5;
+      }
+
+      .delete {
         padding: 10px;
         border: none;
         border-radius: 10px;
@@ -191,7 +221,6 @@
         let ready = false;
         let result = null;
         let openKey = null;
-        let confirmTimeout = null;
 
         function updateHeight() {
           // Measure the content instead of the body, the body is always at least as high as the widget
@@ -263,10 +292,24 @@
             </div>
             <div class="detail-message homey-text-regular">${escapeHtml(item.message)}</div>
             <div>${fields}</div>
-            <button class="delete" id="delete">${escapeHtml(item.repeat ? labels.deleteRecurring : labels.delete)}</button>`;
+            <div class="actions">
+              ${item.repeat ? `<button class="skip" id="skip">${escapeHtml(labels.skip)}</button>` : ''}
+              <button class="delete" id="delete">${escapeHtml(item.repeat ? labels.deleteRecurring : labels.delete)}</button>
+            </div>`;
 
           document.getElementById('close').addEventListener('click', closeDetail);
-          document.getElementById('delete').addEventListener('click', (event) => onDelete(event.currentTarget, item));
+
+          document.getElementById('delete').addEventListener('click', (event) =>
+            confirmAction(event.currentTarget, labels.confirmDelete, () => Homey.api('DELETE', `/${encodeURIComponent(item.id)}`, {}))
+          );
+
+          if (item.repeat) {
+            document.getElementById('skip').addEventListener('click', (event) =>
+              confirmAction(event.currentTarget, labels.confirmSkip, () =>
+                Homey.api('POST', `/${encodeURIComponent(item.id)}/skip`, { timestamp: item.timestamp })
+              )
+            );
+          }
         }
 
         function openDetail(key) {
@@ -278,39 +321,40 @@
 
         function closeDetail() {
           openKey = null;
-          clearTimeout(confirmTimeout);
           document.body.classList.remove('show-detail');
           detailElement.innerHTML = '';
           updateHeight();
         }
 
-        function onDelete(button, item) {
-          const deleteLabel = item.repeat ? result.labels.deleteRecurring : result.labels.delete;
+        function confirmAction(button, confirmLabel, action) {
+          const label = button.dataset.label || button.textContent;
+          button.dataset.label = label;
 
-          // First tap asks for confirmation, second tap deletes
+          // First tap asks for confirmation, second tap runs the action
           if (!button.classList.contains('confirm')) {
             button.classList.add('confirm');
-            button.textContent = result.labels.confirmDelete;
-            confirmTimeout = setTimeout(() => {
+            button.textContent = confirmLabel;
+            clearTimeout(button.confirmTimeout);
+            button.confirmTimeout = setTimeout(() => {
               button.classList.remove('confirm');
-              button.textContent = deleteLabel;
+              button.textContent = label;
             }, 3000);
             return;
           }
 
-          clearTimeout(confirmTimeout);
-          button.disabled = true;
+          clearTimeout(button.confirmTimeout);
+          detailElement.querySelectorAll('.actions button').forEach((actionButton) => (actionButton.disabled = true));
 
-          Homey.api('DELETE', `/${encodeURIComponent(item.id)}`, {})
+          action()
             .then(() => {
               closeDetail();
               load();
             })
             .catch((error) => {
               console.error(error);
-              button.disabled = false;
+              detailElement.querySelectorAll('.actions button').forEach((actionButton) => (actionButton.disabled = false));
               button.classList.remove('confirm');
-              button.textContent = deleteLabel;
+              button.textContent = label;
             });
         }
 

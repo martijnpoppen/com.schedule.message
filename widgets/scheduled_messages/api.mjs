@@ -35,6 +35,8 @@ export default {
                 category: homey.__('widget.labels.category'),
                 delete: homey.__('widget.labels.delete'),
                 deleteRecurring: homey.__('widget.labels.deleteRecurring'),
+                skip: homey.__('widget.labels.skip'),
+                confirmSkip: homey.__('widget.labels.confirmSkip'),
                 confirmDelete: homey.__('widget.labels.confirmDelete'),
                 close: homey.__('widget.labels.close')
             },
@@ -52,6 +54,7 @@ export default {
                 return {
                     id: job.id,
                     key: `${job.id}_${scheduled.toMillis()}`,
+                    timestamp: scheduled.toMillis(),
                     message: job.message,
                     recipient: job.recipient === 'Unknown recipient' ? '' : job.recipient,
                     category: job.category === 'None' ? '' : job.category,
@@ -63,6 +66,11 @@ export default {
                 };
             })
         };
+    },
+
+    async skipOccurrence({ homey, params, body }) {
+        homey.app.skipOccurrence(params.id, body.timestamp);
+        return true;
     },
 
     async deleteMessage({ homey, params }) {
