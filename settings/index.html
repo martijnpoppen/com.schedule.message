@@ -58,6 +58,27 @@
             </div>
 
             <div class="homey-form-group">
+                <label class="homey-form-label" for="repeat">Repeat</label>
+                <select class="homey-form-select" id="repeat">
+                    <option value="none">Don't repeat</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Every 2 weeks</option>
+                </select>
+            </div>
+
+            <div class="homey-form-group" id="days-group" style="display: none">
+                <label class="homey-form-label">Days (leave empty for every day / the weekday of the date above)</label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="1"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Mon</span></label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="2"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Tue</span></label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="3"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Wed</span></label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="4"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Thu</span></label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="5"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Fri</span></label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="6"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Sat</span></label>
+                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="7"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Sun</span></label>
+            </div>
+
+            <div class="homey-form-group">
                 <label class="homey-form-label" for="message">Message</label>
                 <input class="homey-form-input" id="message" type="text" value="" />
             </div>
@@ -96,8 +117,27 @@
                 scheduleMessage();
             });
 
+            var repeatElement = document.getElementById("repeat");
+            repeatElement.addEventListener("change", function () {
+                document.getElementById("days-group").style.display = repeatElement.value === 'none' ? 'none' : 'block';
+            });
+
+            // Refresh the overview when messages are added, sent or removed
+            Homey.on('queue-updated', function () {
+                loadMessages();
+            });
+
             loadMessages();
 
+        }
+
+        var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        var REPEAT_NAMES = { daily: 'Daily', weekly: 'Weekly', biweekly: 'Every 2 weeks' };
+
+        function formatRecurrence (recurrence) {
+            if (!recurrence) return 'No';
+            var days = (recurrence.days || []).map(day => DAY_NAMES[day - 1]).join(', ');
+            return `${REPEAT_NAMES[recurrence.repeat] || recurrence.repeat}${days ? ' on ' + days : ''} at ${recurrence.time}`;
         }
 
         function deleteMessage (id) {
@@ -136,7 +176,8 @@
                                 <td><strong>Recipient:</strong> ${item.recipient}<br>
                                 <strong>Message:</strong> ${item.message}<br>
                                 <strong>Scheduled:</strong> ${new Date(item.scheduledDateTime).toLocaleString()}<br>
-                                <strong>Category:</strong> ${item.category}</>
+                                <strong>Category:</strong> ${item.category}<br>
+                                <strong>Repeat:</strong> ${formatRecurrence(item.recurrence)}</td>
                                 <td>
                                     <button class="homey-button-secondary" onclick="deleteMessage('${item.id}')">
                                         Delete
@@ -178,11 +219,14 @@
             var date = document.getElementById("date").value;
             var message = document.getElementById("message").value;
             var category = document.getElementById("category").value;
+            var repeat = document.getElementById("repeat").value;
+            var days = Array.from(document.querySelectorAll('input[name="days"]:checked')).map(input => input.value).join(',');
             var saveElement = document.getElementById("save");
             saveElement.classList.add("is-loading");
 
             if (!date || !message) {
                 Homey.alert('Please fill in all required fields.');
+                saveElement.classList.remove("is-loading");
                 return;
             }
 
@@ -195,7 +239,9 @@
                 message: message,
                 date: date,
                 time: time,
-                category: category
+                category: category,
+                repeat: repeat,
+                days: days
             })
                 .then((result) => {
                     console.log('Schedule result:', result);

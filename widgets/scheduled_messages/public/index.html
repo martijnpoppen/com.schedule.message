@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <style>
+      .list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .item {
+        display: flex;
+        align-items: center;
+        gap: var(--homey-su-3, 12px);
+        padding: var(--homey-su-2, 8px) 0;
+        border-bottom: 1px solid var(--homey-line-color-light, rgba(128, 128, 128, 0.2));
+      }
+
+      .item:last-child {
+        border-bottom: none;
+      }
+
+      .when {
+        flex: 0 0 auto;
+        min-width: 64px;
+        text-align: center;
+      }
+
+      .when .time {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 22px;
+      }
+
+      .content {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .message,
+      .meta {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0 6px;
+        margin-right: 4px;
+        border-radius: 8px;
+        font-size: 11px;
+        line-height: 16px;
+        color: #fff;
+        background: #8569d8;
+      }
+
+      .empty,
+      .more {
+        padding: var(--homey-su-2, 8px) 0;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body class="homey-widget">
+    <div id="list" class="list"></div>
+
+    <script type="text/javascript">
+      function escapeHtml(value) {
+        const div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.innerHTML;
+      }
+
+      function onHomeyReady(Homey) {
+        const settings = Homey.getSettings();
+        const listElement = document.getElementById('list');
+        let ready = false;
+
+        function render(result) {
+          if (!result.items.length) {
+            listElement.innerHTML = `<div class="empty homey-text-small-light">${escapeHtml(result.emptyText)}</div>`;
+          } else {
+            listElement.innerHTML = result.items
+              .map((item) => {
+                const meta = [item.recipient, item.category].filter(Boolean).map(escapeHtml).join(' · ');
+                const badge = item.repeat ? `<span class="badge">↻ ${escapeHtml(item.repeat)}</span>` : '';
+
+                return `
+                  <div class="item">
+                    <div class="when">
+                      <div class="time">${escapeHtml(item.time)}</div>
+                      <div class="homey-text-small-light">${escapeHtml(item.day)}</div>
+                    </div>
+                    <div class="content">
+                      <div class="message homey-text-regular">${escapeHtml(item.message)}</div>
+                      <div class="meta homey-text-small-light">${badge}${meta}</div>
+                    </div>
+                  </div>`;
+              })
+              .join('');
+
+            if (result.moreText) {
+              listElement.innerHTML += `<div class="more homey-text-small-light">${escapeHtml(result.moreText)}</div>`;
+            }
+          }
+
+          const height = Math.max(document.body.scrollHeight, 80);
+          if (!ready) {
+            Homey.ready({ height });
+            ready = true;
+          } else {
+            Homey.setHeight(height);
+          }
+        }
+
+        function load() {
+          const query = new URLSearchParams({ maxItems: settings.maxItems || 5, category: settings.category || '' });
+
+          Homey.api('GET', `/?${query.toString()}`, {})
+            .then(render)
+            .catch((error) => {
+              console.error(error);
+              if (!ready) {
+                Homey.ready();
+                ready = true;
+              }
+            });
+        }
+
+        // Refresh when a message is added, sent or removed, and periodically to keep "Today" / "Tomorrow" up to date
+        Homey.on('queue-updated', load);
+        setInterval(load, 60 * 1000);
+
+        load();
+      }
+    </script>
+  </body>
+</html>
