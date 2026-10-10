@@ -159,6 +159,7 @@ class ScheduleMessageApp extends HomeyLogger {
                 if (nextDateTime) {
                     this.log('Rescheduling recurring job', job.id, 'to', nextDateTime.toISO());
                     job.scheduledDateTime = nextDateTime;
+                    this.pruneSkippedOccurrences(job);
                 } else {
                     this.queue = this.queue.filter((queuedJob) => queuedJob !== job);
                 }
@@ -391,20 +392,63 @@ class ScheduleMessageApp extends HomeyLogger {
     }
 
     /**
+     * Skips a single occurrence of a recurring message, the following occurrences are kept.
+     * @param {string} id - The id of the recurring message.
+     * @param {number} timestamp - The occurrence to skip, in milliseconds.
+     */
+    skipOccurrence(id, timestamp) {
+        const job = this.queue.find((queuedJob) => queuedJob.id === id);
+        if (!job || !job.recurrence) {
+            throw new Error('Recurring message not found');
+        }
+
+        timestamp = Number(timestamp);
+        job.recurrence.skip = [...new Set([...(job.recurrence.skip || []), timestamp])];
+
+        // When the next occurrence is skipped, move the message to the one after it
+        if (job.scheduledDateTime.toMillis() === timestamp) {
+            const nextDateTime = this.getNextOccurrence(job.recurrence, job.scheduledDateTime);
+
+            if (!nextDateTime) {
+                this.queue = this.queue.filter((queuedJob) => queuedJob !== job);
+            } else {
+                job.scheduledDateTime = nextDateTime;
+            }
+        }
+
+        this.log('Skipped occurrence', DateTime.fromMillis(timestamp).toISO(), 'of job', id);
+
+        this.pruneSkippedOccurrences(job);
+        this.queue.sort((a, b) => a.scheduledDateTime - b.scheduledDateTime);
+        this.persistOrLoadQueue(false);
+    }
+
+    /**
+     * Removes skipped occurrences that are before the next occurrence, they're no longer needed.
+     * @param {object} job
+     */
+    pruneSkippedOccurrences(job) {
+        if (!job.recurrence || !job.recurrence.skip) return;
+
+        job.recurrence.skip = job.recurrence.skip.filter((timestamp) => timestamp >= job.scheduledDateTime.toMillis());
+        if (!job.recurrence.skip.length) delete job.recurrence.skip;
+    }
+
+    /**
      * Calculates the next occurrence of a recurrence after a given moment.
-     * @param {{repeat: string, time: string, days: number[], anchor?: string}} recurrence
+     * @param {{repeat: string, time: string, days: number[], anchor?: string, skip?: number[]}} recurrence
      * @param {DateTime} after
      * @returns {DateTime|null}
      */
-    getNextOccurrence({ repeat, time, days = [], anchor }, after) {
+    getNextOccurrence({ repeat, time, days = [], anchor, skip = [] }, after) {
         const timeZone = this.homey.clock.getTimezone();
         const [hour, minute] = time.split(':').map(Number);
         const anchorWeek = anchor ? DateTime.fromISO(anchor, { zone: timeZone }).startOf('week') : null;
 
         let day = after.setZone(timeZone).startOf('day');
 
-        // 3 weeks is always enough to find the next day for a (bi)weekly schedule
-        for (let i = 0; i <= 21; i++, day = day.plus({ days: 1 })) {
+        // 3 weeks is enough to find the next day for a (bi)weekly schedule, the extra room is for skipped occurrences
+        for (let i = 0; i <= 366; i++, day = day.plus({ days: 1 })) {
             const candidate = day.set({ hour, minute, second: 0, millisecond: 0 });
 
             if (candidate <= after) continue;
@@ -414,6 +458,8 @@ class ScheduleMessageApp extends HomeyLogger {
                 const weeks = Math.round(candidate.startOf('week').diff(anchorWeek, 'weeks').weeks);
                 if (Math.abs(weeks) % 2 !== 0) continue;
             }
+
+            if (skip.includes(candidate.toMillis())) continue;
 
             return candidate;
         }

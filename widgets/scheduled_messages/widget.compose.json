@@ -83,6 +83,10 @@
     "deleteMessage": {
       "method": "DELETE",
       "path": "/:id"
+    },
+    "skipOccurrence": {
+      "method": "POST",
+      "path": "/:id/skip"
     }
   }
 }

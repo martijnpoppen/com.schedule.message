@@ -20,7 +20,9 @@
             "delete": "Verwijderen",
             "deleteRecurring": "Alle herhalingen verwijderen",
             "confirmDelete": "Tik nogmaals om te verwijderen",
-            "close": "Sluiten"
+            "close": "Sluiten",
+            "skip": "Deze keer overslaan",
+            "confirmSkip": "Tik nogmaals om over te slaan"
         }
     }
 }

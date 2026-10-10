@@ -20,7 +20,9 @@
             "delete": "Delete",
             "deleteRecurring": "Delete all repeats",
             "confirmDelete": "Tap again to delete",
-            "close": "Close"
+            "close": "Close",
+            "skip": "Skip this one",
+            "confirmSkip": "Tap again to skip"
         }
     }
 }
