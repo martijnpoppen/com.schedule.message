@@ -12,6 +12,15 @@
             "daily": "Dagelijks",
             "weekly": "Wekelijks",
             "biweekly": "Elke 2 weken"
+        },
+        "labels": {
+            "scheduled": "Gepland",
+            "repeat": "Herhalen",
+            "recipient": "Ontvanger",
+            "category": "Categorie",
+            "delete": "Verwijderen",
+            "confirmDelete": "Tik nogmaals om te verwijderen",
+            "close": "Sluiten"
         }
     }
 }

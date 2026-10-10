@@ -60,6 +60,10 @@
     "getMessages": {
       "method": "GET",
       "path": "/"
+    },
+    "deleteMessage": {
+      "method": "DELETE",
+      "path": "/:id"
     }
   }
 }

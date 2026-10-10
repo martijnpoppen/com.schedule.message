@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime, Info } from 'luxon';
 
 export default {
     async getMessages({ homey, query }) {
@@ -10,7 +10,18 @@ export default {
 
         const jobs = homey.app.queue.filter((job) => !category || String(job.category).toLowerCase() === category);
 
+        const weekdays = Info.weekdays('short', { locale });
+
         return {
+            labels: {
+                scheduled: homey.__('widget.labels.scheduled'),
+                repeat: homey.__('widget.labels.repeat'),
+                recipient: homey.__('widget.labels.recipient'),
+                category: homey.__('widget.labels.category'),
+                delete: homey.__('widget.labels.delete'),
+                confirmDelete: homey.__('widget.labels.confirmDelete'),
+                close: homey.__('widget.labels.close')
+            },
             emptyText: homey.__('widget.empty'),
             moreText: jobs.length > maxItems ? homey.__('widget.more', { count: jobs.length - maxItems }) : '',
             items: jobs.slice(0, maxItems).map((job) => {
@@ -30,9 +41,21 @@ export default {
                     category: job.category === 'None' ? '' : job.category,
                     day,
                     time: scheduled.toFormat('HH:mm'),
-                    repeat: job.recurrence ? homey.__(`widget.repeat.${job.recurrence.repeat}`) : ''
+                    date: scheduled.toFormat('cccc d LLLL yyyy, HH:mm'),
+                    repeat: job.recurrence ? homey.__(`widget.repeat.${job.recurrence.repeat}`) : '',
+                    repeatDays: job.recurrence && job.recurrence.days ? job.recurrence.days.map((weekday) => weekdays[weekday - 1]).join(', ') : ''
                 };
             })
         };
+    },
+
+    async deleteMessage({ homey, params }) {
+        // Only delete by exact id, persistOrLoadQueue would otherwise treat the value as a category
+        if (!homey.app.queue.some((job) => job.id === params.id)) {
+            throw new Error('Message not found');
+        }
+
+        homey.app.persistOrLoadQueue(false, false, params.id);
+        return true;
     }
 };

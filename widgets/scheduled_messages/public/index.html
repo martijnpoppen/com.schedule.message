@@ -24,7 +24,7 @@
         text-align: center;
       }
 
-      .when .time {
+      .time {
         font-size: 18px;
         font-weight: 600;
         line-height: 22px;
@@ -58,11 +58,111 @@
         padding: var(--homey-su-2, 8px) 0;
         text-align: center;
       }
+
+      .item {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .item:active {
+        opacity: 0.6;
+      }
+
+      .detail {
+        display: none;
+        flex-direction: column;
+        gap: var(--homey-su-2, 8px);
+        animation: fade-in 0.15s ease-out;
+      }
+
+      body.show-detail .list {
+        display: none;
+      }
+
+      body.show-detail .detail {
+        display: flex;
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .detail-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--homey-su-2, 8px);
+      }
+
+      .close {
+        flex: 0 0 auto;
+        width: 28px;
+        height: 28px;
+        border: none;
+        border-radius: 50%;
+        font-size: 16px;
+        line-height: 28px;
+        cursor: pointer;
+        color: inherit;
+        background: var(--homey-line-color-light, rgba(128, 128, 128, 0.2));
+      }
+
+      .detail-message {
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 160px;
+        overflow-y: auto;
+      }
+
+      .field {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--homey-su-3, 12px);
+        padding: 4px 0;
+        border-top: 1px solid var(--homey-line-color-light, rgba(128, 128, 128, 0.2));
+      }
+
+      .field .value {
+        text-align: right;
+        word-break: break-word;
+      }
+
+      .delete {
+        margin-top: var(--homey-su-1, 4px);
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #e5484d;
+        background: rgba(229, 72, 77, 0.12);
+        transition: background 0.15s, color 0.15s;
+      }
+
+      .delete.confirm {
+        color: #fff;
+        background: #e5484d;
+      }
+
+      .delete:disabled {
+        opacity: 0.5;
+      }
     </style>
   </head>
 
   <body class="homey-widget">
-    <div id="list" class="list"></div>
+    <div id="root">
+      <div id="list" class="list"></div>
+      <div id="detail" class="detail"></div>
+    </div>
 
     <script type="text/javascript">
       function escapeHtml(value) {
@@ -74,43 +174,140 @@
       function onHomeyReady(Homey) {
         const settings = Homey.getSettings();
         const listElement = document.getElementById('list');
+        const detailElement = document.getElementById('detail');
         let ready = false;
+        let result = null;
+        let openId = null;
+        let confirmTimeout = null;
 
-        function render(result) {
-          if (!result.items.length) {
-            listElement.innerHTML = `<div class="empty homey-text-small-light">${escapeHtml(result.emptyText)}</div>`;
-          } else {
-            listElement.innerHTML = result.items
-              .map((item) => {
-                const meta = [item.recipient, item.category].filter(Boolean).map(escapeHtml).join(' · ');
-                const badge = item.repeat ? `<span class="badge">↻ ${escapeHtml(item.repeat)}</span>` : '';
-
-                return `
-                  <div class="item">
-                    <div class="when">
-                      <div class="time">${escapeHtml(item.time)}</div>
-                      <div class="homey-text-small-light">${escapeHtml(item.day)}</div>
-                    </div>
-                    <div class="content">
-                      <div class="message homey-text-regular">${escapeHtml(item.message)}</div>
-                      <div class="meta homey-text-small-light">${badge}${meta}</div>
-                    </div>
-                  </div>`;
-              })
-              .join('');
-
-            if (result.moreText) {
-              listElement.innerHTML += `<div class="more homey-text-small-light">${escapeHtml(result.moreText)}</div>`;
-            }
-          }
-
-          const height = Math.max(document.body.scrollHeight, 80);
+        function updateHeight() {
+          // Measure the content instead of the body, the body is always at least as high as the widget
+          const bottom = document.getElementById('root').getBoundingClientRect().bottom;
+          const height = Math.max(Math.ceil(bottom + parseFloat(getComputedStyle(document.body).paddingBottom || 0)), 80);
           if (!ready) {
             Homey.ready({ height });
             ready = true;
           } else {
             Homey.setHeight(height);
           }
+        }
+
+        function renderList() {
+          if (!result.items.length) {
+            listElement.innerHTML = `<div class="empty homey-text-small-light">${escapeHtml(result.emptyText)}</div>`;
+            return;
+          }
+
+          listElement.innerHTML = result.items
+            .map((item) => {
+              const meta = [item.recipient, item.category].filter(Boolean).map(escapeHtml).join(' · ');
+              const badge = item.repeat ? `<span class="badge">↻ ${escapeHtml(item.repeat)}</span>` : '';
+
+              return `
+                <div class="item" data-id="${escapeHtml(item.id)}">
+                  <div class="when">
+                    <div class="time">${escapeHtml(item.time)}</div>
+                    <div class="homey-text-small-light">${escapeHtml(item.day)}</div>
+                  </div>
+                  <div class="content">
+                    <div class="message homey-text-regular">${escapeHtml(item.message)}</div>
+                    <div class="meta homey-text-small-light">${badge}${meta}</div>
+                  </div>
+                </div>`;
+            })
+            .join('');
+
+          if (result.moreText) {
+            listElement.innerHTML += `<div class="more homey-text-small-light">${escapeHtml(result.moreText)}</div>`;
+          }
+        }
+
+        function renderDetail() {
+          const item = result && result.items.find((listItem) => listItem.id === openId);
+
+          // The message was sent or removed in the meantime
+          if (!item) {
+            closeDetail();
+            return;
+          }
+
+          const labels = result.labels;
+          const repeat = item.repeat ? `${item.repeat}${item.repeatDays ? ` (${item.repeatDays})` : ''}` : '';
+          const fields = [
+            [labels.scheduled, item.date],
+            [labels.repeat, repeat],
+            [labels.recipient, item.recipient],
+            [labels.category, item.category]
+          ]
+            .filter(([, value]) => value)
+            .map(([label, value]) => `
+              <div class="field homey-text-small">
+                <span class="homey-text-small-light">${escapeHtml(label)}</span>
+                <span class="value">${escapeHtml(value)}</span>
+              </div>`)
+            .join('');
+
+          detailElement.innerHTML = `
+            <div class="detail-header">
+              <div class="time">${escapeHtml(item.time)} <span class="homey-text-small-light">${escapeHtml(item.day)}</span></div>
+              <button class="close" id="close" aria-label="${escapeHtml(labels.close)}">✕</button>
+            </div>
+            <div class="detail-message homey-text-regular">${escapeHtml(item.message)}</div>
+            <div>${fields}</div>
+            <button class="delete" id="delete">${escapeHtml(labels.delete)}</button>`;
+
+          document.getElementById('close').addEventListener('click', closeDetail);
+          document.getElementById('delete').addEventListener('click', (event) => onDelete(event.currentTarget, item.id));
+        }
+
+        function openDetail(id) {
+          openId = id;
+          document.body.classList.add('show-detail');
+          renderDetail();
+          updateHeight();
+        }
+
+        function closeDetail() {
+          openId = null;
+          clearTimeout(confirmTimeout);
+          document.body.classList.remove('show-detail');
+          detailElement.innerHTML = '';
+          updateHeight();
+        }
+
+        function onDelete(button, id) {
+          // First tap asks for confirmation, second tap deletes
+          if (!button.classList.contains('confirm')) {
+            button.classList.add('confirm');
+            button.textContent = result.labels.confirmDelete;
+            confirmTimeout = setTimeout(() => {
+              button.classList.remove('confirm');
+              button.textContent = result.labels.delete;
+            }, 3000);
+            return;
+          }
+
+          clearTimeout(confirmTimeout);
+          button.disabled = true;
+
+          Homey.api('DELETE', `/${encodeURIComponent(id)}`, {})
+            .then(() => {
+              closeDetail();
+              load();
+            })
+            .catch((error) => {
+              console.error(error);
+              button.disabled = false;
+              button.classList.remove('confirm');
+              button.textContent = result.labels.delete;
+            });
+        }
+
+        function render(data) {
+          result = data;
+          renderList();
+          if (openId) renderDetail();
+          updateHeight();
         }
 
         function load() {
@@ -126,6 +323,11 @@
               }
             });
         }
+
+        listElement.addEventListener('click', (event) => {
+          const itemElement = event.target.closest('.item');
+          if (itemElement) openDetail(itemElement.dataset.id);
+        });
 
         // Refresh when a message is added, sent or removed, and periodically to keep "Today" / "Tomorrow" up to date
         Homey.on('queue-updated', load);
