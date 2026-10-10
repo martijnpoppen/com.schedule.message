@@ -27,7 +27,7 @@
     "en": "NEW: add topic and links"
   },
   "1.4.0": {
-    "en": "NEW: schedule recurring messages (once, daily, weekly, every 2 weeks) on a time | NEW: dashboard widget with scheduled messages | FIX: scheduled messages not sent after app restart",
-    "nl": "NIEUW: plan terugkerende berichten (eenmalig, dagelijks, wekelijks, elke 2 weken) op een tijd | NIEUW: dashboard widget met geplande berichten | FIX: geplande berichten werden niet verstuurd na herstart van de app"
+    "en": "NEW: schedule recurring messages on a time (once, daily, weekly, every 2 weeks) | NEW: flowcard to remove only recurring messages | NEW: dashboard widget with upcoming messages, tap a message for details or to delete it | FIX: scheduled messages not sent after app restart",
+    "nl": "NIEUW: plan terugkerende berichten op een tijd (eenmalig, dagelijks, wekelijks, elke 2 weken) | NIEUW: flowkaart om alleen terugkerende berichten te verwijderen | NIEUW: dashboard widget met komende berichten, tik op een bericht voor details of om het te verwijderen | FIX: geplande berichten werden niet verstuurd na herstart van de app"
   }
 }
