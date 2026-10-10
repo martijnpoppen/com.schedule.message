@@ -54,6 +54,25 @@
         "ko": "카테고리 (모두에 대해 비워 두기)"
       },
       "value": ""
+    },
+    {
+      "id": "expandRecurring",
+      "type": "checkbox",
+      "title": {
+        "en": "Show each upcoming repeat of recurring messages",
+        "nl": "Toon elke komende herhaling van terugkerende berichten",
+        "de": "Jede kommende Wiederholung wiederkehrender Nachrichten anzeigen",
+        "fr": "Afficher chaque prochaine répétition des messages récurrents",
+        "it": "Mostra ogni prossima ripetizione dei messaggi ricorrenti",
+        "sv": "Visa varje kommande upprepning av återkommande meddelanden",
+        "no": "Vis hver kommende gjentakelse av gjentakende meldinger",
+        "es": "Mostrar cada próxima repetición de los mensajes recurrentes",
+        "da": "Vis hver kommende gentagelse af tilbagevendende beskeder",
+        "ru": "Показывать каждое предстоящее повторение повторяющихся сообщений",
+        "pl": "Pokaż każde nadchodzące powtórzenie cyklicznych wiadomości",
+        "ko": "반복 메시지의 각 예정된 반복 표시"
+      },
+      "value": true
     }
   ],
   "api": {

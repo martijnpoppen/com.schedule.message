@@ -18,6 +18,7 @@
             "recipient": "Ontvanger",
             "category": "Categorie",
             "delete": "Verwijderen",
+            "deleteRecurring": "Alle herhalingen verwijderen",
             "confirmDelete": "Tik nogmaals om te verwijderen",
             "close": "Sluiten"
         }

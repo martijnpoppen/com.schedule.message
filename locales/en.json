@@ -18,6 +18,7 @@
             "recipient": "Recipient",
             "category": "Category",
             "delete": "Delete",
+            "deleteRecurring": "Delete all repeats",
             "confirmDelete": "Tap again to delete",
             "close": "Close"
         }
