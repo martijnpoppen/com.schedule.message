@@ -12,6 +12,15 @@
             "daily": "Daily",
             "weekly": "Weekly",
             "biweekly": "Every 2 weeks"
+        },
+        "labels": {
+            "scheduled": "Scheduled",
+            "repeat": "Repeat",
+            "recipient": "Recipient",
+            "category": "Category",
+            "delete": "Delete",
+            "confirmDelete": "Tap again to delete",
+            "close": "Close"
         }
     }
 }

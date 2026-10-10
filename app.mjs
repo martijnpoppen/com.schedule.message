@@ -256,6 +256,26 @@ class ScheduleMessageApp extends HomeyLogger {
 
             this.persistOrLoadQueue(false, false, args.category || '');
         });
+
+        const reset_recurring_messages = this.homey.flow.getActionCard('reset_recurring_messages');
+        reset_recurring_messages.registerRunListener(async (args, state) => {
+            this.trace('[Action]', 'reset_recurring_messages');
+
+            this.removeRecurringMessages(args.category || '');
+        });
+    }
+
+    /**
+     * Removes all recurring messages, optionally only for one category. One-off messages are kept.
+     * @param {string} category - The category to remove recurring messages for, empty for all categories.
+     */
+    removeRecurringMessages(category = '') {
+        this.log('Removing recurring messages for category:', category || 'all');
+
+        this.queue = this.queue.filter((job) => !job.recurrence || (category !== '' && job.category !== category));
+        this.persistOrLoadQueue(false);
+
+        return this.queue;
     }
 
     runAction(date, time, message, category, recipient = 'Unknown recipient') {
