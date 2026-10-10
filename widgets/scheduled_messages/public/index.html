@@ -1,16 +1,24 @@
 <html>
   <head>
     <style>
+      #root {
+        position: relative;
+        overflow: hidden;
+      }
+
       .list {
         display: flex;
         flex-direction: column;
+        height: 100%;
       }
 
       .item {
+        flex: 0 0 auto;
         display: flex;
         align-items: center;
         gap: var(--homey-su-3, 12px);
-        padding: var(--homey-su-2, 8px) 0;
+        height: 60px;
+        box-sizing: border-box;
         border-bottom: 1px solid var(--homey-line-color-light, rgba(128, 128, 128, 0.2));
       }
 
@@ -53,9 +61,11 @@
         background: #8569d8;
       }
 
-      .empty,
-      .more {
-        padding: var(--homey-su-2, 8px) 0;
+      .empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
         text-align: center;
       }
 
@@ -70,6 +80,9 @@
 
       .detail {
         display: none;
+        height: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
         flex-direction: column;
         gap: var(--homey-su-2, 8px);
         animation: fade-in 0.15s ease-out;
@@ -117,8 +130,6 @@
       .detail-message {
         white-space: pre-wrap;
         word-break: break-word;
-        max-height: 160px;
-        overflow-y: auto;
       }
 
       .field {
@@ -173,6 +184,8 @@
 
       function onHomeyReady(Homey) {
         const settings = Homey.getSettings();
+        const ROW_HEIGHT = 60;
+        const maxItems = Math.max(1, Number(settings.maxItems) || 5);
         const listElement = document.getElementById('list');
         const detailElement = document.getElementById('detail');
         let ready = false;
@@ -216,10 +229,6 @@
                 </div>`;
             })
             .join('');
-
-          if (result.moreText) {
-            listElement.innerHTML += `<div class="more homey-text-small-light">${escapeHtml(result.moreText)}</div>`;
-          }
         }
 
         function renderDetail() {
@@ -311,7 +320,7 @@
         }
 
         function load() {
-          const query = new URLSearchParams({ maxItems: settings.maxItems || 5, category: settings.category || '' });
+          const query = new URLSearchParams({ maxItems, category: settings.category || '' });
 
           Homey.api('GET', `/?${query.toString()}`, {})
             .then(render)
@@ -323,6 +332,9 @@
               }
             });
         }
+
+        // The widget is always as high as the configured number of messages, the detail view scrolls within it
+        document.getElementById('root').style.height = `${maxItems * ROW_HEIGHT}px`;
 
         listElement.addEventListener('click', (event) => {
           const itemElement = event.target.closest('.item');
