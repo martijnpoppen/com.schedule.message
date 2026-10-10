@@ -25,5 +25,9 @@
   },
   "1.3.0": {
     "en": "NEW: add topic and links"
+  },
+  "1.4.0": {
+    "en": "NEW: schedule recurring messages (once, daily, weekly, every 2 weeks) on a time | NEW: dashboard widget with scheduled messages | FIX: scheduled messages not sent after app restart",
+    "nl": "NIEUW: plan terugkerende berichten (eenmalig, dagelijks, wekelijks, elke 2 weken) op een tijd | NIEUW: dashboard widget met geplande berichten | FIX: geplande berichten werden niet verstuurd na herstart van de app"
   }
 }
