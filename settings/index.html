@@ -2,266 +2,582 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <!-- The '/homey.js' script must be included in your settings view to work -->
     <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
-    <link rel="stylesheet" href="./tabs.css">
     <style>
-        table,
-        th,
-        td {
-            border: 1px solid;
-        }
-
-        table {
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        .homey-button-secondary {
-            background: black
+        :root {
+            --accent: #8569d8;
+            --danger: #e5484d;
+            --line: var(--homey-line-color-light, rgba(128, 128, 128, 0.25));
+            --muted: var(--homey-text-color-light, #8a8a8a);
+            --card: var(--homey-background-color, transparent);
         }
 
         .homey-header {
-            margin-bottom: 0px !important;
+            margin-bottom: 0 !important;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tab {
+            padding: 10px 14px;
+            cursor: pointer;
+            color: var(--muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+        }
+
+        .tab.active {
+            color: inherit;
+            font-weight: 600;
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 16px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .toolbar select {
+            flex: 1 1 140px;
+        }
+
+        .summary {
+            margin-bottom: 12px;
+            color: var(--muted);
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            background: var(--card);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .card-time {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-day {
+            color: var(--muted);
+        }
+
+        .badge {
+            margin-left: auto;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #fff;
+            background: var(--accent);
+            white-space: nowrap;
+        }
+
+        .card-message {
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin-bottom: 8px;
+        }
+
+        .field {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 4px 0;
+            border-top: 1px solid var(--line);
+            font-size: 14px;
+        }
+
+        .field .label {
+            color: var(--muted);
+        }
+
+        .field .value {
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .upcoming {
+            border-top: 1px solid var(--line);
+            padding-top: 6px;
+            font-size: 14px;
+        }
+
+        .upcoming .label {
+            color: var(--muted);
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 6px 0 2px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            font-size: 13px;
+            cursor: pointer;
+            background: transparent;
+            color: inherit;
+        }
+
+        .chip:hover {
+            border-color: var(--accent);
+        }
+
+        .chip .x {
+            margin-left: 4px;
+            color: var(--muted);
+        }
+
+        .hint {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .button-danger {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--danger);
+            background: rgba(229, 72, 77, 0.12);
+        }
+
+        .button-light {
+            padding: 8px 14px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            cursor: pointer;
+            color: inherit;
+            background: transparent;
+        }
+
+        .day-toggles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .day-toggle {
+            min-width: 44px;
+            padding: 8px 6px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            cursor: pointer;
+            color: inherit;
+            background: transparent;
+        }
+
+        .day-toggle.selected {
+            color: #fff;
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+
+        .preview {
+            margin: 4px 0 16px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: rgba(133, 105, 216, 0.1);
+            font-size: 14px;
+        }
+
+        .preview.error {
+            color: var(--danger);
+            background: rgba(229, 72, 77, 0.1);
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 
 <body>
     <header class="homey-header">
-        <h1 class="homey-title tab-title" data-i18n="settings.overview"></h1>
+        <h1 class="homey-title" id="title" data-i18n="settings.overview"></h1>
         <div class="tabs">
-            <div class="tab active" data-tab="1" data-title_i18n="overview">Overview</div>
-            <div class="tab" data-tab="2" data-title_i18n="new">Add Message</div>
+            <div class="tab active" data-tab="overview" data-i18n="settings.tabOverview"></div>
+            <div class="tab" data-tab="new" data-i18n="settings.tabNew"></div>
         </div>
     </header>
-    <div class="tab-content active" id="tab-content-1">
-        <button id="refresh" class="homey-button-primary">Refresh Messages</button>
-        <br>
-        <br>
-        <div id="table"></div>
+
+    <div class="tab-content active" id="tab-overview">
+        <div class="toolbar">
+            <select class="homey-form-select" id="filter"></select>
+            <button class="button-light" id="remove-recurring" data-i18n="settings.removeRecurring"></button>
+            <button class="button-danger" id="remove-all" data-i18n="settings.removeAll"></button>
+        </div>
+        <div class="summary" id="summary"></div>
+        <div id="messages"></div>
     </div>
-    <div class="tab-content" id="tab-content-2">
+
+    <div class="tab-content" id="tab-new">
         <fieldset class="homey-form-fieldset">
             <div class="homey-form-group">
-                <label class="homey-form-label" for="recipient">Recipient (optional)</label>
-                <input class="homey-form-input" id="recipient" type="text" value="" />
-            </div>
-            <div class="homey-form-group">
-                <label class="homey-form-label" for="date">Date</label>
-                <input class="homey-form-input" id="date" type="datetime-local" value="" />
+                <label class="homey-form-label" for="message" data-i18n="settings.message"></label>
+                <textarea class="homey-form-textarea" id="message" rows="3"></textarea>
             </div>
 
             <div class="homey-form-group">
-                <label class="homey-form-label" for="repeat">Repeat</label>
+                <label class="homey-form-label" for="recipient" data-i18n="settings.recipient"></label>
+                <input class="homey-form-input" id="recipient" type="text" value="" />
+            </div>
+
+            <div class="homey-form-group">
+                <label class="homey-form-label" for="category" data-i18n="settings.category"></label>
+                <input class="homey-form-input" id="category" type="text" value="None" />
+            </div>
+
+            <div class="homey-form-group">
+                <label class="homey-form-label" for="repeat" data-i18n="settings.repeat"></label>
                 <select class="homey-form-select" id="repeat">
-                    <option value="none">Don't repeat</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="biweekly">Every 2 weeks</option>
+                    <option value="none" data-i18n="settings.repeatNone"></option>
+                    <option value="daily" data-i18n="widget.repeat.daily"></option>
+                    <option value="weekly" data-i18n="widget.repeat.weekly"></option>
+                    <option value="biweekly" data-i18n="widget.repeat.biweekly"></option>
                 </select>
             </div>
 
-            <div class="homey-form-group" id="days-group" style="display: none">
-                <label class="homey-form-label">Days (leave empty for every day / the weekday of the date above)</label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="1"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Mon</span></label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="2"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Tue</span></label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="3"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Wed</span></label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="4"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Thu</span></label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="5"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Fri</span></label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="6"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Sat</span></label>
-                <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" name="days" value="7"><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text">Sun</span></label>
+            <div class="homey-form-group" id="once-group">
+                <label class="homey-form-label" for="datetime" data-i18n="settings.dateTime"></label>
+                <input class="homey-form-input" id="datetime" type="datetime-local" value="" />
             </div>
 
-            <div class="homey-form-group">
-                <label class="homey-form-label" for="message">Message</label>
-                <input class="homey-form-input" id="message" type="text" value="" />
-            </div>
+            <div id="recurring-group" class="hidden">
+                <div class="homey-form-group">
+                    <label class="homey-form-label" for="time" data-i18n="settings.time"></label>
+                    <input class="homey-form-input" id="time" type="time" value="" />
+                </div>
 
-            <div class="homey-form-group">
-                <label class="homey-form-label" for="category">Category</label>
-                <input class="homey-form-input" id="category" type="text" value="None" />
+                <div class="homey-form-group">
+                    <label class="homey-form-label" data-i18n="settings.days"></label>
+                    <div class="day-toggles" id="days"></div>
+                    <div class="hint" data-i18n="settings.daysHint"></div>
+                </div>
+
+                <div class="homey-form-group">
+                    <label class="homey-form-label" for="start-date" data-i18n="settings.startDate"></label>
+                    <input class="homey-form-input" id="start-date" type="date" value="" />
+                </div>
             </div>
         </fieldset>
 
-        <button id="save" class="homey-button-primary-full">Schedule Message</button>
-        <br>
+        <div class="preview hidden" id="preview"></div>
+
+        <button id="save" class="homey-button-primary-full" data-i18n="settings.save"></button>
     </div>
 
     <script type="text/javascript">
-        // a method named 'onHomeyReady' must be present in your code
+        function escapeHtml (value) {
+            const div = document.createElement('div');
+            div.textContent = value == null ? '' : String(value);
+            return div.innerHTML;
+        }
+
+        function errorText (error) {
+            return (error && error.message) || String(error);
+        }
+
         function onHomeyReady (Homey) {
-            // Tell Homey we're ready to be displayed
-            Homey.ready();
-            var refreshElement = document.getElementById("refresh");
-            refreshElement.addEventListener("click", function () {
-                // check if the button is already loading
-                if (refreshElement.classList.contains("is-loading")) {
-                    return; // Prevent multiple clicks while loading
-                }
-                // When the button is clicked, reload the messages
-                loadMessages();
-            });
-            var saveElement = document.getElementById("save");
-            saveElement.addEventListener("click", function () {
-                // check if the button is already loading
-                if (saveElement.classList.contains("is-loading")) {
-                    return; // Prevent multiple clicks while loading
-                }
-                // When the button is clicked, schedule a new message
-                scheduleMessage();
+            const __ = (key, tokens) => Homey.__(key, tokens);
+            let messages = [];
+            let previewTimeout = null;
+
+            // ------- Helpers -------
+            function confirmDialog (message) {
+                return new Promise((resolve) => {
+                    const result = Homey.confirm(message, 'warning', (error, confirmed) => resolve(!error && confirmed));
+                    if (result && typeof result.then === 'function') result.then(resolve, () => resolve(false));
+                });
+            }
+
+            function translatePage () {
+                document.querySelectorAll('[data-i18n]').forEach((element) => {
+                    element.textContent = __(element.dataset.i18n);
+                });
+            }
+
+            // ------- Tabs -------
+            document.querySelectorAll('.tab').forEach((tab) => {
+                tab.addEventListener('click', () => showTab(tab.dataset.tab));
             });
 
-            var repeatElement = document.getElementById("repeat");
-            repeatElement.addEventListener("change", function () {
-                document.getElementById("days-group").style.display = repeatElement.value === 'none' ? 'none' : 'block';
+            function showTab (name) {
+                document.querySelectorAll('.tab').forEach((tab) => tab.classList.toggle('active', tab.dataset.tab === name));
+                document.querySelectorAll('.tab-content').forEach((content) => content.classList.toggle('active', content.id === `tab-${name}`));
+                document.getElementById('title').textContent = __(name === 'new' ? 'settings.new' : 'settings.overview');
+            }
+
+            // ------- Overview -------
+            const filterElement = document.getElementById('filter');
+            filterElement.addEventListener('change', renderMessages);
+
+            function loadMessages () {
+                return Homey.api('GET', '/messages', {})
+                    .then((result) => {
+                        messages = result || [];
+                        renderFilter();
+                        renderMessages();
+                    })
+                    .catch((error) => Homey.alert(errorText(error)));
+            }
+
+            function renderFilter () {
+                const current = filterElement.value;
+                const categories = [...new Set(messages.map((item) => item.category).filter(Boolean))].sort();
+
+                filterElement.innerHTML = `<option value="">${escapeHtml(__('settings.allCategories'))}</option>` +
+                    categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+                filterElement.value = categories.includes(current) ? current : '';
+                filterElement.classList.toggle('hidden', !categories.length);
+            }
+
+            function renderMessages () {
+                const category = filterElement.value;
+                const items = messages.filter((item) => !category || item.category === category);
+                const container = document.getElementById('messages');
+
+                document.getElementById('summary').textContent = items.length
+                    ? __('settings.summary', { count: items.length, recurring: items.filter((item) => item.repeat).length })
+                    : '';
+                document.getElementById('remove-recurring').classList.toggle('hidden', !items.some((item) => item.repeat));
+                document.getElementById('remove-all').classList.toggle('hidden', !items.length);
+
+                if (!items.length) {
+                    container.innerHTML = `<p class="hint">${escapeHtml(__('settings.empty'))}</p>`;
+                    return;
+                }
+
+                container.innerHTML = items.map((item) => {
+                    const repeat = item.repeat ? `${item.repeat}${item.repeatDays ? ` (${item.repeatDays})` : ''}` : '';
+                    const fields = [
+                        [__('widget.labels.scheduled'), item.date],
+                        [__('widget.labels.repeat'), repeat],
+                        [__('widget.labels.recipient'), item.recipient],
+                        [__('widget.labels.category'), item.category]
+                    ]
+                        .filter(([, value]) => value)
+                        .map(([label, value]) => `
+                            <div class="field"><span class="label">${escapeHtml(label)}</span><span class="value">${escapeHtml(value)}</span></div>`)
+                        .join('');
+
+                    const upcoming = item.upcoming && item.upcoming.length ? `
+                        <div class="upcoming">
+                            <span class="label">${escapeHtml(__('settings.upcoming'))}</span>
+                            <div class="chips">
+                                ${item.upcoming.map((occurrence) => `
+                                    <button class="chip" data-action="skip" data-id="${escapeHtml(item.id)}" data-timestamp="${occurrence.timestamp}" data-date="${escapeHtml(occurrence.date)}">
+                                        ${escapeHtml(occurrence.day)} ${escapeHtml(occurrence.time)}<span class="x">✕</span>
+                                    </button>`).join('')}
+                            </div>
+                            <div class="hint">${escapeHtml(__('settings.skipHint'))}</div>
+                        </div>` : '';
+
+                    return `
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-time">${escapeHtml(item.time)}</span>
+                                <span class="card-day">${escapeHtml(item.day)}</span>
+                                ${item.repeat ? `<span class="badge">↻ ${escapeHtml(item.repeat)}</span>` : ''}
+                            </div>
+                            <div class="card-message">${escapeHtml(item.message)}</div>
+                            ${fields}
+                            ${upcoming}
+                            <div class="card-actions">
+                                <button class="button-danger" data-action="delete" data-id="${escapeHtml(item.id)}" data-recurring="${item.repeat ? 'true' : 'false'}">
+                                    ${escapeHtml(item.repeat ? __('widget.labels.deleteRecurring') : __('widget.labels.delete'))}
+                                </button>
+                            </div>
+                        </div>`;
+                }).join('');
+            }
+
+            document.getElementById('messages').addEventListener('click', async (event) => {
+                const button = event.target.closest('button[data-action]');
+                if (!button) return;
+
+                const { action, id } = button.dataset;
+
+                if (action === 'skip') {
+                    if (!(await confirmDialog(__('settings.confirmSkip', { date: button.dataset.date })))) return;
+                    button.disabled = true;
+                    Homey.api('POST', `/messages/${encodeURIComponent(id)}/skip`, { timestamp: Number(button.dataset.timestamp) })
+                        .then(loadMessages)
+                        .catch((error) => Homey.alert(errorText(error)));
+                }
+
+                if (action === 'delete') {
+                    const question = button.dataset.recurring === 'true' ? __('settings.confirmDeleteRecurring') : __('settings.confirmDelete');
+                    if (!(await confirmDialog(question))) return;
+                    button.disabled = true;
+                    Homey.api('DELETE', `/messages/${encodeURIComponent(id)}`, {})
+                        .then(loadMessages)
+                        .catch((error) => Homey.alert(errorText(error)));
+                }
+            });
+
+            function removeMessages (scope) {
+                const category = filterElement.value;
+                const inCategory = category ? __('settings.inCategory', { category }) : '';
+                const question = __(scope === 'recurring' ? 'settings.confirmRemoveRecurring' : 'settings.confirmRemoveAll', { category: inCategory });
+
+                confirmDialog(question).then((confirmed) => {
+                    if (!confirmed) return;
+                    const query = new URLSearchParams({ scope, category });
+                    Homey.api('DELETE', `/messages?${query.toString()}`, {})
+                        .then(loadMessages)
+                        .catch((error) => Homey.alert(errorText(error)));
+                });
+            }
+
+            document.getElementById('remove-recurring').addEventListener('click', () => removeMessages('recurring'));
+            document.getElementById('remove-all').addEventListener('click', () => removeMessages('all'));
+
+            // ------- New message -------
+            const repeatElement = document.getElementById('repeat');
+            const daysElement = document.getElementById('days');
+
+            // Monday 1 January 2024 is used to get the localized weekday names
+            daysElement.innerHTML = [1, 2, 3, 4, 5, 6, 7].map((day) => {
+                const name = new Date(2024, 0, day).toLocaleDateString(document.documentElement.lang || undefined, { weekday: 'short' });
+                return `<button type="button" class="day-toggle" data-day="${day}">${escapeHtml(name)}</button>`;
+            }).join('');
+
+            daysElement.addEventListener('click', (event) => {
+                const toggle = event.target.closest('.day-toggle');
+                if (!toggle) return;
+                toggle.classList.toggle('selected');
+                updatePreview();
+            });
+
+            repeatElement.addEventListener('change', () => {
+                const recurring = repeatElement.value !== 'none';
+                document.getElementById('once-group').classList.toggle('hidden', recurring);
+                document.getElementById('recurring-group').classList.toggle('hidden', !recurring);
+                updatePreview();
+            });
+
+            ['datetime', 'time', 'start-date'].forEach((id) => document.getElementById(id).addEventListener('input', updatePreview));
+
+            function getSchedule () {
+                const repeat = repeatElement.value;
+
+                if (repeat === 'none') {
+                    const [date, time] = document.getElementById('datetime').value.split('T');
+                    return { repeat, date: date || '', time: time || '', days: '' };
+                }
+
+                return {
+                    repeat,
+                    time: document.getElementById('time').value,
+                    date: document.getElementById('start-date').value,
+                    days: Array.from(daysElement.querySelectorAll('.selected')).map((toggle) => toggle.dataset.day).join(',')
+                };
+            }
+
+            function updatePreview () {
+                clearTimeout(previewTimeout);
+                previewTimeout = setTimeout(() => {
+                    const schedule = getSchedule();
+                    const previewElement = document.getElementById('preview');
+
+                    if (!schedule.time || (schedule.repeat === 'none' && !schedule.date)) {
+                        previewElement.classList.add('hidden');
+                        return;
+                    }
+
+                    const query = new URLSearchParams(schedule);
+                    Homey.api('GET', `/messages/preview?${query.toString()}`, {})
+                        .then((occurrences) => {
+                            previewElement.classList.remove('hidden', 'error');
+                            previewElement.innerHTML = `<strong>${escapeHtml(__('settings.preview'))}:</strong> ` +
+                                occurrences.map((occurrence) => escapeHtml(occurrence.date)).join(' · ');
+                        })
+                        .catch((error) => {
+                            previewElement.classList.remove('hidden');
+                            previewElement.classList.add('error');
+                            previewElement.textContent = errorText(error);
+                        });
+                }, 300);
+            }
+
+            document.getElementById('save').addEventListener('click', () => {
+                const saveElement = document.getElementById('save');
+                if (saveElement.classList.contains('is-loading')) return;
+
+                const schedule = getSchedule();
+                const message = document.getElementById('message').value.trim();
+
+                if (!message || !schedule.time || (schedule.repeat === 'none' && !schedule.date)) {
+                    Homey.alert(__('settings.required'));
+                    return;
+                }
+
+                saveElement.classList.add('is-loading');
+
+                Homey.api('POST', '/queue', {
+                    ...schedule,
+                    message,
+                    recipient: document.getElementById('recipient').value.trim(),
+                    category: document.getElementById('category').value.trim() || 'None'
+                })
+                    .then(() => {
+                        // Reset the form and show the new message in the overview
+                        document.getElementById('message').value = '';
+                        document.getElementById('preview').classList.add('hidden');
+                        showTab('overview');
+                        return loadMessages();
+                    })
+                    .catch((error) => Homey.alert(errorText(error)))
+                    .finally(() => saveElement.classList.remove('is-loading'));
             });
 
             // Refresh the overview when messages are added, sent or removed
-            Homey.on('queue-updated', function () {
-                loadMessages();
-            });
+            Homey.on('queue-updated', loadMessages);
 
-            loadMessages();
-
-        }
-
-        var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        var REPEAT_NAMES = { daily: 'Daily', weekly: 'Weekly', biweekly: 'Every 2 weeks' };
-
-        function formatRecurrence (recurrence) {
-            if (!recurrence) return 'No';
-            var days = (recurrence.days || []).map(day => DAY_NAMES[day - 1]).join(', ');
-            return `${REPEAT_NAMES[recurrence.repeat] || recurrence.repeat}${days ? ' on ' + days : ''} at ${recurrence.time}`;
-        }
-
-        function deleteMessage (id) {
-            Homey.api('DELETE', `/queue/?id=${id}`, {})
-                .then((result) => {
-                    console.log('Delete result:', result);
-                    // Reload the messages after deletion
-                    loadMessages();
-                })
-                .catch(err => Homey.alert(err));
-        }
-
-        function loadMessages () {
-            var refreshElement = document.getElementById("refresh");
-            refreshElement.classList.add("is-loading");
-            Homey.api('GET', '/queue', {})
-                .then((result) => {
-                    console.log('Queue result:', result);
-                    var tableElement = document.getElementById("table");
-                    // Clear any existing content in the table element
-                    tableElement.innerHTML = '';
-
-                    if (result && result.length) {
-                        // If there are messages in the queue, show them in a table
-                        var table = document.createElement('table');
-                        table.className = 'homey-table';
-                        table.innerHTML = `
-                            <tr>
-                                <th>Messages</th>
-                                <th>Delete?</th>
-                            </tr>
-                            `;
-                        result.forEach(item => {
-                            var row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td><strong>Recipient:</strong> ${item.recipient}<br>
-                                <strong>Message:</strong> ${item.message}<br>
-                                <strong>Scheduled:</strong> ${new Date(item.scheduledDateTime).toLocaleString()}<br>
-                                <strong>Category:</strong> ${item.category}<br>
-                                <strong>Repeat:</strong> ${formatRecurrence(item.recurrence)}</td>
-                                <td>
-                                    <button class="homey-button-secondary" onclick="deleteMessage('${item.id}')">
-                                        Delete
-                                    </button>
-                                </td>
-                            `;
-                            table.appendChild(row);
-                        });
-                        tableElement.appendChild(table);
-                    } else {
-                        // If there are no messages in the queue, show a message
-                        var table = document.createElement('table');
-                        table.className = 'homey-table';
-                        table.innerHTML = `
-                            <tr>
-                                <th>Messages</th>
-                                
-                            </tr>
-                            `;
-
-                        var row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td colspan="2">No messages scheduled.</td>
-                        `;
-                        table.appendChild(row);
-                        tableElement.appendChild(table);
-                    }
-
-                    setTimeout(() => {
-                        refreshElement.classList.remove("is-loading");
-                    }, 1000);
-
-                })
-                .catch(err => Homey.alert(err));
-        }
-
-        function scheduleMessage () {
-            var recipient = document.getElementById("recipient").value;
-            var date = document.getElementById("date").value;
-            var message = document.getElementById("message").value;
-            var category = document.getElementById("category").value;
-            var repeat = document.getElementById("repeat").value;
-            var days = Array.from(document.querySelectorAll('input[name="days"]:checked')).map(input => input.value).join(',');
-            var saveElement = document.getElementById("save");
-            saveElement.classList.add("is-loading");
-
-            if (!date || !message) {
-                Homey.alert('Please fill in all required fields.');
-                saveElement.classList.remove("is-loading");
-                return;
-            }
-
-            var time = date.split('T')[1]; // Extract time from datetime-local input
-            time = time.replace('Z', ''); // Remove 'Z' if present
-            date = date.split('T')[0]; // Extract date from datetime-local input
-
-            Homey.api('POST', '/queue', {
-                recipient: recipient,
-                message: message,
-                date: date,
-                time: time,
-                category: category,
-                repeat: repeat,
-                days: days
-            })
-                .then((result) => {
-                    console.log('Schedule result:', result);
-                    // Reload the messages after scheduling
-                    loadMessages();
-                    
-
-                    // reload the page
-                    setTimeout(() => {
-                        saveElement.classList.remove("is-loading");
-                        window.location.reload();
-                    }, 1000);
-                })
-                .catch(err => {
-                    Homey.alert(err)
-                    saveElement.classList.remove("is-loading");
-                });
+            translatePage();
+            showTab('overview');
+            loadMessages().finally(() => Homey.ready());
         }
     </script>
-    <script type="text/javascript" src="./tabs.js"></script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@ import HomeyLogger from './lib/logger.mjs';
 import fs, { writeFileSync, readFileSync, existsSync } from 'fs';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { DateTime } from 'luxon';
+import { DateTime, Info } from 'luxon';
 import { v4 as uuidv4, validate as isValidUUID } from 'uuid';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -315,32 +315,7 @@ class ScheduleMessageApp extends HomeyLogger {
      */
     runRecurringAction(time, repeat = 'once', days = '', message, category = 'None', recipient = '', startDate = null) {
         try {
-            if (!REPEAT_TYPES.includes(repeat)) {
-                throw new Error(`Invalid repeat value "${repeat}". Use one of: ${REPEAT_TYPES.join(', ')}`);
-            }
-
-            if (!/^\d{1,2}:\d{2}/.test(time || '')) {
-                throw new Error('Invalid time format. Please provide a time as HH:mm.');
-            }
-
-            const timeZone = this.homey.clock.getTimezone();
-            const now = DateTime.local({ zone: timeZone });
-            const from = startDate ? DateTime.max(now, DateTime.fromISO(this.formatDateToIso(startDate), { zone: timeZone }).minus({ milliseconds: 1 })) : now;
-            const recurrence = { repeat, time: time.slice(0, 5), days: this.parseDays(days) };
-
-            // Find the first occurrence, and use its weekday / week as base when no days are given
-            const scheduledDateTime = this.getNextOccurrence(recurrence, from);
-            if (!scheduledDateTime) {
-                throw new Error('Could not determine the next occurrence for this schedule.');
-            }
-
-            if (!recurrence.days.length && (repeat === 'weekly' || repeat === 'biweekly')) {
-                recurrence.days = [scheduledDateTime.weekday];
-            }
-
-            if (repeat === 'biweekly') {
-                recurrence.anchor = scheduledDateTime.startOf('week').toISODate();
-            }
+            const { scheduledDateTime, recurrence } = this.buildSchedule(time, repeat, days, startDate);
 
             const job = {
                 id: uuidv4(),
@@ -363,6 +338,186 @@ class ScheduleMessageApp extends HomeyLogger {
             this.error('Error in runRecurringAction:', error);
             throw error;
         }
+    }
+
+    /**
+     * Validates a time based schedule and calculates its first occurrence.
+     * @param {string} time - Time in HH:mm.
+     * @param {string} repeat - One of once, daily, weekly, biweekly.
+     * @param {string|Array} days - Days to run on, see parseDays.
+     * @param {string|null} startDate - Optional date from which the schedule starts.
+     * @returns {{scheduledDateTime: DateTime, recurrence: object}}
+     */
+    buildSchedule(time, repeat = 'once', days = '', startDate = null) {
+        if (!REPEAT_TYPES.includes(repeat)) {
+            throw new Error(`Invalid repeat value "${repeat}". Use one of: ${REPEAT_TYPES.join(', ')}`);
+        }
+
+        if (!/^\d{1,2}:\d{2}/.test(time || '')) {
+            throw new Error('Invalid time format. Please provide a time as HH:mm.');
+        }
+
+        const timeZone = this.homey.clock.getTimezone();
+        const now = DateTime.local({ zone: timeZone });
+        const from = startDate ? DateTime.max(now, DateTime.fromISO(this.formatDateToIso(startDate), { zone: timeZone }).minus({ milliseconds: 1 })) : now;
+        const recurrence = { repeat, time: time.slice(0, 5), days: this.parseDays(days) };
+
+        // Find the first occurrence, and use its weekday / week as base when no days are given
+        const scheduledDateTime = this.getNextOccurrence(recurrence, from);
+        if (!scheduledDateTime) {
+            throw new Error('Could not determine the next occurrence for this schedule.');
+        }
+
+        if (!recurrence.days.length && (repeat === 'weekly' || repeat === 'biweekly')) {
+            recurrence.days = [scheduledDateTime.weekday];
+        }
+
+        if (repeat === 'biweekly') {
+            recurrence.anchor = scheduledDateTime.startOf('week').toISODate();
+        }
+
+        return { scheduledDateTime, recurrence };
+    }
+
+    /**
+     * Returns the first occurrences of a schedule without saving it, used to preview a schedule on the settings page.
+     * @returns {Array} Formatted occurrences.
+     */
+    previewSchedule(time, repeat = 'once', days = '', startDate = null, count = 3) {
+        const { scheduledDateTime, recurrence } = this.buildSchedule(time, repeat, days, startDate);
+        const occurrences = [];
+
+        let scheduled = scheduledDateTime;
+        for (let i = 0; i < (repeat === 'once' ? 1 : count) && scheduled; i++) {
+            occurrences.push(this.formatOccurrence(scheduled));
+            scheduled = this.getNextOccurrence(recurrence, scheduled);
+        }
+
+        return occurrences;
+    }
+
+    /**
+     * Validates a one-off date and time the same way runAction does, without saving it.
+     * @returns {Array} The formatted occurrence.
+     */
+    previewOneOff(date, time) {
+        const timeZone = this.homey.clock.getTimezone();
+        const scheduledDateTime = DateTime.fromISO(`${this.formatDateToIso(date)}T${time}`, { zone: timeZone });
+
+        if (!scheduledDateTime.isValid) {
+            throw new Error('Invalid time format. Please provide a time as HH:mm.');
+        }
+
+        if (scheduledDateTime < DateTime.local({ zone: timeZone })) {
+            throw new Error('Scheduled date and time is in the past. Please provide a future date and time.');
+        }
+
+        return [this.formatOccurrence(scheduledDateTime)];
+    }
+
+    /**
+     * Formats a moment in the timezone and language of Homey.
+     * @param {DateTime} dateTime
+     * @returns {{timestamp: number, day: string, time: string, date: string}}
+     */
+    formatOccurrence(dateTime) {
+        const timeZone = this.homey.clock.getTimezone();
+        const scheduled = dateTime.setZone(timeZone).setLocale(this.homey.i18n.getLanguage());
+        const daysAway = Math.round(scheduled.startOf('day').diff(DateTime.local({ zone: timeZone }).startOf('day'), 'days').days);
+
+        let day;
+        if (daysAway === 0) day = this.homey.__('widget.today');
+        else if (daysAway === 1) day = this.homey.__('widget.tomorrow');
+        else if (daysAway > 1 && daysAway < 7) day = scheduled.toFormat('cccc');
+        else day = scheduled.toFormat('ccc d LLL');
+
+        return {
+            timestamp: scheduled.toMillis(),
+            day,
+            time: scheduled.toFormat('HH:mm'),
+            date: scheduled.toFormat('cccc d LLLL yyyy, HH:mm')
+        };
+    }
+
+    /**
+     * Returns the scheduled messages formatted for the widget and settings page.
+     * @param {object} options
+     * @param {number} [options.maxItems] - Maximum number of items to return.
+     * @param {string} [options.category] - Only return messages of this category.
+     * @param {boolean} [options.expandRecurring] - Return each upcoming occurrence of recurring messages as its own item.
+     * @param {number} [options.upcoming] - Number of upcoming occurrences to add to recurring messages.
+     * @returns {Array}
+     */
+    getMessages({ maxItems = Infinity, category = '', expandRecurring = false, upcoming = 0 } = {}) {
+        const weekdays = Info.weekdays('short', { locale: this.homey.i18n.getLanguage() });
+        const categoryFilter = String(category || '').trim().toLowerCase();
+        const jobs = this.queue.filter((job) => !categoryFilter || String(job.category).toLowerCase() === categoryFilter);
+
+        // Recurring messages are a single job in the queue, optionally expand them into their upcoming occurrences
+        const occurrences = [];
+        for (const job of jobs) {
+            const count = expandRecurring && Number.isFinite(maxItems) ? maxItems : 1;
+            let scheduled = job.scheduledDateTime;
+
+            for (let i = 0; i < count && scheduled; i++) {
+                occurrences.push({ job, scheduled });
+                scheduled = job.recurrence ? this.getNextOccurrence(job.recurrence, scheduled) : null;
+            }
+        }
+
+        occurrences.sort((a, b) => a.scheduled - b.scheduled);
+
+        return occurrences.slice(0, maxItems).map(({ job, scheduled }) => {
+            const occurrence = this.formatOccurrence(scheduled);
+            const item = {
+                id: job.id,
+                key: `${job.id}_${occurrence.timestamp}`,
+                ...occurrence,
+                message: job.message,
+                recipient: job.recipient === 'Unknown recipient' ? '' : job.recipient,
+                category: job.category === 'None' ? '' : job.category,
+                repeat: job.recurrence ? this.homey.__(`widget.repeat.${job.recurrence.repeat}`) : '',
+                repeatDays: job.recurrence && job.recurrence.days ? job.recurrence.days.map((weekday) => weekdays[weekday - 1]).join(', ') : ''
+            };
+
+            if (upcoming && job.recurrence) {
+                item.upcoming = [];
+                let next = scheduled;
+                for (let i = 0; i < upcoming && next; i++) {
+                    item.upcoming.push(this.formatOccurrence(next));
+                    next = this.getNextOccurrence(job.recurrence, next);
+                }
+            }
+
+            return item;
+        });
+    }
+
+    /**
+     * Deletes a single message by its exact id. persistOrLoadQueue would treat an unknown id as a category.
+     * @param {string} id
+     */
+    deleteMessage(id) {
+        if (!this.queue.some((job) => job.id === id)) {
+            throw new Error('Message not found');
+        }
+
+        this.persistOrLoadQueue(false, false, id);
+    }
+
+    /**
+     * Removes messages in bulk.
+     * @param {'all'|'recurring'} scope - Remove all messages or only the recurring ones.
+     * @param {string} category - Only remove messages of this category, empty for all categories.
+     */
+    removeMessages(scope = 'all', category = '') {
+        if (scope === 'recurring') return this.removeRecurringMessages(category);
+
+        this.log('Removing messages for category:', category || 'all');
+        this.queue = this.queue.filter((job) => category !== '' && job.category !== category);
+        this.persistOrLoadQueue(false);
+
+        return this.queue;
     }
 
     /**
