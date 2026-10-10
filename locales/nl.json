@@ -7,7 +7,6 @@
         "today": "Vandaag",
         "tomorrow": "Morgen",
         "empty": "Geen berichten gepland",
-        "more": "+ nog __count__",
         "repeat": {
             "daily": "Dagelijks",
             "weekly": "Wekelijks",

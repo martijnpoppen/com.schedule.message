@@ -23,7 +23,6 @@ export default {
                 close: homey.__('widget.labels.close')
             },
             emptyText: homey.__('widget.empty'),
-            moreText: jobs.length > maxItems ? homey.__('widget.more', { count: jobs.length - maxItems }) : '',
             items: jobs.slice(0, maxItems).map((job) => {
                 const scheduled = job.scheduledDateTime.setZone(timeZone).setLocale(locale);
                 const daysAway = Math.round(scheduled.startOf('day').diff(today, 'days').days);

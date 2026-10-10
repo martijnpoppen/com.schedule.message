@@ -7,7 +7,6 @@
         "today": "Today",
         "tomorrow": "Tomorrow",
         "empty": "No messages scheduled",
-        "more": "+ __count__ more",
         "repeat": {
             "daily": "Daily",
             "weekly": "Weekly",
