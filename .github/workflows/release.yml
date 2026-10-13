@@ -1,0 +1,84 @@
+name: Release Homey App
+
+# Run manually from the Actions tab: bumps the version, adds the changelog,
+# publishes it to the Homey App Store and then commits and tags the release on main.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        description: Version
+        required: true
+        default: patch
+        options:
+          - major
+          - minor
+          - patch
+      changelog:
+        type: string
+        description: Changelog (English)
+        required: true
+
+# Needed to push the version commit and tag and to create the GitHub release
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release Homey App
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate
+        uses: athombv/github-action-homey-app-validate@master
+        with:
+          level: publish
+
+      - name: Update version
+        uses: athombv/github-action-homey-app-version@master
+        id: version
+        with:
+          version: ${{ inputs.version }}
+          changelog: ${{ inputs.changelog }}
+
+      - name: Publish to Homey App Store
+        uses: athombv/github-action-homey-app-publish@master
+        id: publish
+        with:
+          personal_access_token: ${{ secrets.HOMEY_PAT }}
+
+      # Only commit the version bump once the app has been published
+      - name: Commit, tag & push
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          CHANGELOG: ${{ inputs.changelog }}
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          git commit -m "Bump version to v$VERSION" -m "Changelog: $CHANGELOG"
+          git tag "v$VERSION"
+
+          git push origin HEAD --tags
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          CHANGELOG: ${{ inputs.changelog }}
+        run: gh release create "v$VERSION" --title "v$VERSION" --notes "$CHANGELOG"
+
+      - name: Summary
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          URL: ${{ steps.publish.outputs.url }}
+        run: |
+          echo "Published v$VERSION." >> "$GITHUB_STEP_SUMMARY"
+          echo "Submit it for certification at $URL" >> "$GITHUB_STEP_SUMMARY"
