@@ -29,5 +29,8 @@
   "1.4.0": {
     "en": "NEW: schedule recurring messages on a time (once, daily, weekly, every 2 weeks) | NEW: flowcard to remove only recurring messages | NEW: dashboard widget with upcoming messages, tap a message for details, to skip one repeat or to delete it | NEW: redesigned settings page with upcoming repeats, skip, filter and bulk remove | FIX: scheduled messages not sent after app restart",
     "nl": "NIEUW: plan terugkerende berichten op een tijd (eenmalig, dagelijks, wekelijks, elke 2 weken) | NIEUW: flowkaart om alleen terugkerende berichten te verwijderen | NIEUW: dashboard widget met komende berichten, tik op een bericht voor details, om een herhaling over te slaan of om het te verwijderen | NIEUW: vernieuwde instellingenpagina met komende herhalingen, overslaan, filter en alles verwijderen | FIX: geplande berichten werden niet verstuurd na herstart van de app"
+  },
+  "1.4.1": {
+    "en": "FIX: widget preview images"
   }
 }
